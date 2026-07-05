@@ -1,0 +1,1220 @@
+<!doctype html>
+<!--
+  REBUILT STANDALONE BUNDLE (not the original)
+  Original "Chuk Design System v0.4 (standalone).html" exceeds the 256KiB
+  source-API cap and could not be fetched intact. This file was rebuilt
+  deterministically from intact sources: v0.4.html + GongGlyph.jsx +
+  glyph-engine.jsx + Symbols.jsx + ds-v04.jsx (all in this repo).
+  Local ttf @font-face swapped for Google Fonts CDN. React/Babel via CDN.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>축 · Design System v0.4 (standalone, rebuilt)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* rebuilt: local ttf replaced by Google Fonts CDN link (see <head>) */
+  :root {
+    --ink: #141414;
+    --ink-2: #4a4a4a;
+    --ink-3: #8a8a8a;
+    --line: #e6e1d6;
+    --bg: #f4f3ef;
+    --paper: #faf9f5;
+    --accent: #d9531e;
+    --grid: #cfd2d8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'IBM Plex Sans KR', -apple-system, system-ui, sans-serif;
+    font-weight: 300; letter-spacing: -0.01em; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+  .page { max-width: 1320px; margin: 0 auto; padding: 56px 56px 140px; }
+
+  .masthead { display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink); padding-bottom: 18px; }
+  .masthead .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 13px; }
+  .masthead .brand .sep { color: var(--ink-3); padding: 0 10px; }
+  .masthead .meta { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-2); }
+
+  /* HERO */
+  .hero { padding: 80px 0 64px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: end; }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 500; color: var(--ink-2); margin-bottom: 20px; }
+  .hero h1 { font-weight: 700; font-size: 76px; line-height: 1.0; margin: 0 0 24px; letter-spacing: -0.035em; }
+  .hero h1 .mark { color: var(--accent); }
+  .hero .lede { font-size: 17px; line-height: 1.65; color: var(--ink-2); max-width: 56ch; }
+  .hero .lede b { color: var(--ink); font-weight: 500; }
+  .hero-mark { background: var(--paper); border: 1px solid var(--line); aspect-ratio: 1/1; display: grid; place-items: center; }
+
+  /* SECTION */
+  section { margin-top: 96px; }
+  .section-head { display: flex; align-items: baseline; gap: 18px;
+    border-top: 1px solid var(--ink); padding-top: 22px; margin-bottom: 36px; }
+  .section-head .num { font-family: 'IBM Plex Mono', monospace; font-weight: 500;
+    font-size: 12px; letter-spacing: 0.1em; color: var(--ink); }
+  .section-head h2 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .section-head .caption { margin-left: auto; font-size: 12px; color: var(--ink-2); letter-spacing: 0.08em; }
+
+  /* HIERARCHY MAP */
+  .hierarchy { background: var(--paper); border: 1px solid var(--line); padding: 48px;
+    display: grid; grid-template-columns: 1fr; gap: 36px; }
+  .hierarchy .core-row { display: flex; justify-content: center; }
+  .hierarchy .sub-row { display: flex; justify-content: center; gap: 120px; }
+  .hierarchy .node { display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding: 20px 24px; min-width: 180px; text-align: center; }
+  .hierarchy .node .role { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-3); font-weight: 500;}
+  .hierarchy .node .name { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .hierarchy .node.core .name { font-size: 22px; color: var(--accent); }
+  .hierarchy .node .concept { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--ink-2);}
+
+  /* TRIAD TABLE */
+  .triad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--ink); }
+  .triad > .cell { background: #fff; padding: 36px 32px; border-right: 1px solid var(--ink); display:flex; flex-direction: column; gap: 18px;}
+  .triad > .cell:last-child { border-right: 0; }
+  .triad > .cell.primary { background: var(--ink); color: var(--bg); }
+  .triad .cap { font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-3); font-weight: 500;}
+  .triad .primary .cap { color: rgba(244,243,239,0.55); }
+  .triad h3 { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; }
+  .triad .primary h3 { color: #fff; }
+  .triad .primary h3 .en { color: var(--accent); }
+  .triad .glyph-frame { aspect-ratio: 1/1; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; padding: 20px; }
+  .triad .primary .glyph-frame { background: #202020; border-color: rgba(255,255,255,0.1); }
+  .triad dl { display: grid; grid-template-columns: 72px 1fr; gap: 8px 16px;
+    font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 0; }
+  .triad .primary dl { color: rgba(244,243,239,0.68); }
+  .triad dt { color: var(--ink); font-weight: 500; }
+  .triad .primary dt { color: #fff; }
+  .triad dd { margin: 0; }
+  .triad .desc { font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  .triad .primary .desc { color: rgba(244,243,239,0.78); }
+
+  /* SYSTEM RULES */
+  .rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rule { background: #fff; border: 1px solid var(--line); padding: 26px; }
+  .rule .n { font-size: 10px; letter-spacing: 0.2em; color: var(--accent); font-weight: 500;}
+  .rule h4 { margin: 10px 0 10px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em;}
+  .rule p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  /* TYPE SAMPLES */
+  .typeboard { background: #fff; border: 1px solid var(--line); padding: 48px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .typeboard .tb-cell { border-right: 1px solid var(--line); padding: 0 24px; display: flex; flex-direction: column; align-items: center; gap: 14px;}
+  .typeboard .tb-cell:last-child { border-right: 0; }
+  .typeboard .tb-cell .label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); font-weight: 500;}
+  .typeboard .tb-cell .char { font-size: 13px; color: var(--ink-2); font-family: 'IBM Plex Mono', monospace; }
+
+  /* COMBINATIONS */
+  .combo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .combo-cell { background: #fff; border: 1px solid var(--line); padding: 28px; display:flex; flex-direction:column; gap: 16px; min-width: 0;}
+  .combo-cell .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .combo-cell .head h4 { margin: 0; font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .combo-cell .head .tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+  .combo-cell .stage { aspect-ratio: 4/3; background: var(--paper); border: 1px solid var(--line); display:grid; place-items: center; padding: 14px;}
+  .combo-cell p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+
+  /* PALETTE */
+  .palette { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid var(--line);}
+  .sw { aspect-ratio: 1/1; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--line); font-size: 11px; letter-spacing: 0.06em;}
+  .sw:last-child { border-right: 0; }
+  .sw .swn { font-weight: 500; }
+  .sw .swc { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.02em; }
+
+  footer { margin-top: 120px; border-top: 1px solid var(--ink); padding-top: 22px; display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2);}
+  footer span b { color: var(--ink); font-weight: 600; }
+
+  .note { margin-top: 28px; font-size: 12px; color: var(--ink-3); letter-spacing: 0.04em; max-width: 80ch; line-height: 1.6; }
+
+  /* REVIEW — 접점 variant comparison */
+  .review { display: grid; grid-template-columns: repeat(4, 1fr) 1.2fr; gap: 0; border: 1px solid var(--ink); background: #fff; }
+  .review > .rv { padding: 28px 24px 32px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .review > .rv:last-child { border-right: 0; background: var(--ink); color: var(--bg); }
+  .review .rv .tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .review > .rv:last-child .tag { color: var(--accent); }
+  .review .rv h5 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+  .review .rv .stage { aspect-ratio: 1/1; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; padding: 12px; }
+  .review > .rv:last-child .stage { background: #202020; border-color: rgba(255,255,255,0.1); }
+  .review .rv .verdict { font-size: 12px; line-height: 1.55; color: var(--ink-2); }
+  .review > .rv:last-child .verdict { color: rgba(244,243,239,0.75); }
+  .review .rv .params { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.02em; line-height: 1.6; border-top: 1px dashed var(--line); padding-top: 10px; }
+  .review > .rv:last-child .params { color: rgba(244,243,239,0.45); border-color: rgba(255,255,255,0.14); }
+  .review .rv .mark { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--ink-3); }
+  .review > .rv:last-child .mark { color: var(--accent); }
+
+  /* SUB-REVIEW (v0.4) */
+  .subreview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--ink); background: #fff; }
+  .subreview .srv { padding: 28px 28px 32px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .subreview .srv:last-child { border-right: 0; }
+  .subreview .srv.winner { background: var(--ink); color: var(--bg); }
+  .subreview .srv .hd { display: flex; justify-content: space-between; align-items: baseline; }
+  .subreview .srv .tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .subreview .srv.winner .tag { color: var(--accent); }
+  .subreview .srv .mark { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--accent); }
+  .subreview .srv h5 { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .subreview .srv .sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--ink-3); text-transform: uppercase; }
+  .subreview .srv.winner .sub { color: rgba(244,243,239,0.55); }
+  .subreview .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .subreview .pair .box { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .subreview .pair .lbl { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .subreview .srv.winner .pair .lbl { color: rgba(244,243,239,0.5); }
+  .subreview .pair .stage { aspect-ratio: 1/1; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; padding: 10px; }
+  .subreview .srv.winner .pair .stage { background: #202020; border-color: rgba(255,255,255,0.1); }
+  .subreview .srv .verdict { font-size: 12px; line-height: 1.55; color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 4px; }
+  .subreview .srv.winner .verdict { color: rgba(244,243,239,0.78); border-color: rgba(255,255,255,0.14); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel">
+// ── inlined from fonts/GongGlyph.jsx (rebuilt bundle) ──
+// "공" glyph built on the Octagonal Master Grid.
+// Every stroke is 0° / 90° / 45° / 135°. No curves. Ever.
+//
+// Grid convention (per syllable block):
+//   1000 x 1000 viewBox, centered
+//   Octagon bounding box fills the block with a small outer margin
+//   Stroke weight is parameterized so we can explore
+//     - Strategy 1 (Stable): heavy ㅇ, light ㄱ+ㅗ
+//     - Strategy 2 (Energy): heaviest ㅗ vertical (axis), medium ㅇ, light ㄱ
+
+const { useMemo } = React;
+
+// --- OCTAGON GEOMETRY -------------------------------------------------
+// Regular octagon inscribed in a square of side S, centered at (cx, cy).
+// Chamfer fraction c = (1 - 1/(1+√2))/2 ≈ 0.1464 → each corner is cut at 45°.
+function octagonPath(cx, cy, size, cornerRadius = 0) {
+  const s = size / 2;
+  const c = s * (Math.SQRT2 - 1) / Math.SQRT2; // distance from corner the cut starts
+  // 8 vertices, clockwise from top-left-of-top edge
+  const pts = [
+    [cx - s + c, cy - s], [cx + s - c, cy - s],
+    [cx + s,     cy - s + c], [cx + s,     cy + s - c],
+    [cx + s - c, cy + s], [cx - s + c, cy + s],
+    [cx - s,     cy + s - c], [cx - s,     cy - s + c],
+  ];
+  if (cornerRadius <= 0) {
+    return 'M' + pts.map(p => p.join(',')).join(' L ') + ' Z';
+  }
+  // Tiny fillets at each vertex — purely optical.
+  let d = '';
+  for (let i = 0; i < pts.length; i++) {
+    const prev = pts[(i + pts.length - 1) % pts.length];
+    const curr = pts[i];
+    const next = pts[(i + 1) % pts.length];
+    const v1 = normalize([prev[0] - curr[0], prev[1] - curr[1]]);
+    const v2 = normalize([next[0] - curr[0], next[1] - curr[1]]);
+    const a = [curr[0] + v1[0] * cornerRadius, curr[1] + v1[1] * cornerRadius];
+    const b = [curr[0] + v2[0] * cornerRadius, curr[1] + v2[1] * cornerRadius];
+    d += (i === 0 ? 'M' : ' L') + a.join(',');
+    d += ` Q ${curr[0]},${curr[1]} ${b.join(',')}`;
+  }
+  d += ' Z';
+  return d;
+}
+function normalize([x, y]) { const L = Math.hypot(x, y); return [x / L, y / L]; }
+
+// --- THE GLYPH --------------------------------------------------------
+function GongGlyph({
+  size = 480,
+  strategy = 'stable',   // 'stable' | 'energy' | 'uniform'
+  showGrid = false,
+  color = '#141414',
+  gridColor = '#D0D4DB',
+  cornerRadius = 4,       // tiny chamfer on octagon vertices
+}) {
+  // viewBox is 1000 wide; one syllable block
+  const VB = 1000;
+  const padY = 30;
+  const blockH = VB - padY * 2;
+
+  // Vertical layout: divide block into 3 bands (ㄱ, ㅗ, ㅇ) stacked
+  // Band heights are tuned for Hangul balance — ㅇ gets the most room.
+  const gakH = blockH * 0.26;
+  const oH   = blockH * 0.30;
+  const ngH  = blockH * 0.36;
+  const gap  = (blockH - gakH - oH - ngH) / 2;
+
+  const gakY  = padY;
+  const oY    = padY + gakH + gap;
+  const ngY   = padY + gakH + gap + oH + gap;
+
+  // Horizontal: everything is centered on cx and shares the same inner width
+  const cx = VB / 2;
+  const innerW = VB * 0.72; // consistent letter width across all jamo
+
+  // Stroke weights by strategy
+  const W = (() => {
+    switch (strategy) {
+      case 'stable':  return { gak: 60, oStem: 60, oBar: 60, ng: 110 };
+      case 'energy':  return { gak: 60, oStem: 130, oBar: 70, ng: 90 };
+      case 'uniform': return { gak: 80, oStem: 80, oBar: 80, ng: 80 };
+      default:        return { gak: 60, oStem: 60, oBar: 60, ng: 100 };
+    }
+  })();
+
+  // --- ㄱ -------------------------------------------------------------
+  // Horizontal across top, dropping at right with a 45° chamfer.
+  const gakLeft = cx - innerW / 2;
+  const gakRight = cx + innerW / 2;
+  const gakBottom = gakY + gakH;
+  const chamfer = Math.min(gakH * 0.35, innerW * 0.12);
+
+  const gakPath = useMemo(() => {
+    // Outer outline of the ㄱ stroke, drawn as a filled shape so we control
+    // the 45° chamfer at the corner precisely.
+    const t = W.gak;
+    // outer path: top-left → top-right (before chamfer) → diagonal → down to bottom-right → inner...
+    return `
+      M ${gakLeft} ${gakY}
+      L ${gakRight - chamfer} ${gakY}
+      L ${gakRight} ${gakY + chamfer}
+      L ${gakRight} ${gakBottom}
+      L ${gakRight - t} ${gakBottom}
+      L ${gakRight - t} ${gakY + chamfer + t * 0.4}
+      L ${gakRight - chamfer - t * 0.4} ${gakY + t}
+      L ${gakLeft} ${gakY + t}
+      Z
+    `.trim();
+  }, [W.gak, gakLeft, gakRight, gakY, gakBottom, chamfer]);
+
+  // --- ㅗ -------------------------------------------------------------
+  const oStemW = W.oStem;
+  const oStemH = oH * 0.62;
+  const oBarW  = innerW;
+  const oBarH  = W.oBar;
+  const oStemX = cx - oStemW / 2;
+  const oBarY  = oY + oH - oBarH;
+
+  // --- ㅇ (octagon) ---------------------------------------------------
+  const ngSize = Math.min(innerW, ngH);
+  const ngCx = cx;
+  const ngCy = ngY + ngH / 2;
+  const ngWeight = W.ng;
+  const outerOct = octagonPath(ngCx, ngCy, ngSize, cornerRadius);
+  const innerOct = octagonPath(ngCx, ngCy, ngSize - ngWeight * 2, Math.max(0, cornerRadius - 2));
+
+  // --- Grid overlay --------------------------------------------------
+  const grid = showGrid ? (
+    <g stroke={gridColor} strokeWidth={1.5} fill="none" opacity={0.9}>
+      {/* Master octagon */}
+      <path d={octagonPath(VB / 2, VB / 2, VB * 0.92, 0)} strokeDasharray="6 6" />
+      {/* 8-direction axes through center */}
+      {[0, 45, 90, 135].map(deg => {
+        const r = VB * 0.48;
+        const rad = (deg * Math.PI) / 180;
+        const dx = Math.cos(rad) * r, dy = Math.sin(rad) * r;
+        return (
+          <line key={deg}
+            x1={VB/2 - dx} y1={VB/2 - dy}
+            x2={VB/2 + dx} y2={VB/2 + dy}
+            strokeDasharray="4 5" />
+        );
+      })}
+      {/* Per-jamo baselines */}
+      <line x1={0} y1={gakY} x2={VB} y2={gakY} strokeDasharray="2 4" opacity={0.5}/>
+      <line x1={0} y1={gakY + gakH} x2={VB} y2={gakY + gakH} strokeDasharray="2 4" opacity={0.5}/>
+      <line x1={0} y1={oY + oH} x2={VB} y2={oY + oH} strokeDasharray="2 4" opacity={0.5}/>
+      <line x1={0} y1={ngY + ngH} x2={VB} y2={ngY + ngH} strokeDasharray="2 4" opacity={0.5}/>
+    </g>
+  ) : null;
+
+  return (
+    <svg viewBox={`0 0 ${VB} ${VB}`} width={size} height={size} style={{display:'block'}}>
+      {grid}
+
+      {/* ㄱ */}
+      <path d={gakPath} fill={color} />
+
+      {/* ㅗ — vertical axis then horizontal base */}
+      <rect x={oStemX} y={oY + (oH - oBarH - oStemH)} width={oStemW} height={oStemH} fill={color}/>
+      <rect x={cx - oBarW/2} y={oBarY} width={oBarW} height={oBarH} fill={color}/>
+
+      {/* ㅇ — hollow octagon */}
+      <path d={outerOct + ' ' + innerOct} fillRule="evenodd" fill={color}/>
+    </svg>
+  );
+}
+
+window.GongGlyph = GongGlyph;
+window.octagonPath = octagonPath;
+
+</script>
+<script type="text/babel">
+// ── inlined from glyph-engine.jsx (rebuilt bundle) ──
+// glyph-engine.jsx
+// ───────────────────────────────────────────────────────────────────
+// "젊은공주" 4-glyph octagonal type engine.
+//
+//   Master grid: 16×16 normalized units.
+//   Stroke primitives:
+//     hStroke(x1,x2, yc, w, ch)       — horizontal, centered on yc
+//     vStroke(xc, y1,y2, w, ch)       — vertical, centered on xc
+//     dStroke(x1,y1, x2,y2, w, ch)    — 45° diagonal, centered
+//     octRing(cx,cy, R, w)            — ㅇ ring (flat-top octagon)
+//     squareRing(x,y,w,h, sw, ch)     — ㅁ hollow box
+//   Corners are CHAMFERED at 45° by amount `ch` (in grid units).
+//   Outer silhouette of each stroke is always drawn with chamfered
+//   end-caps so terminals match the 축 logo's visual language.
+// ───────────────────────────────────────────────────────────────────
+
+// ── chamfered rectangle ───────────────────────────────────────────
+// Returns SVG path `d` string for a rect (x1,y1)-(x2,y2) with optional
+// 45° chamfers at each corner. flags = [TL, TR, BR, BL].
+function chamRect(x1, y1, x2, y2, ch, flags) {
+  const [tl, tr, br, bl] = flags;
+  const c = Math.min(ch, (x2 - x1) / 2, (y2 - y1) / 2);
+  let d = '';
+  d += `M ${x1 + (tl ? c : 0)} ${y1}`;
+  d += ` L ${x2 - (tr ? c : 0)} ${y1}`;
+  if (tr) d += ` L ${x2} ${y1 + c}`;
+  d += ` L ${x2} ${y2 - (br ? c : 0)}`;
+  if (br) d += ` L ${x2 - c} ${y2}`;
+  d += ` L ${x1 + (bl ? c : 0)} ${y2}`;
+  if (bl) d += ` L ${x1} ${y2 - c}`;
+  d += ` L ${x1} ${y1 + (tl ? c : 0)}`;
+  if (tl) d += ` L ${x1 + c} ${y1}`;
+  d += ' Z';
+  return d;
+}
+
+function hStroke(x1, x2, yc, w, ch) {
+  return chamRect(x1, yc - w / 2, x2, yc + w / 2, ch, [1, 1, 1, 1]);
+}
+function vStroke(xc, y1, y2, w, ch) {
+  return chamRect(xc - w / 2, y1, xc + w / 2, y2, ch, [1, 1, 1, 1]);
+}
+
+// ── Diagonal (45° only) stroke ────────────────────────────────────
+// Draws a slab of thickness w centered on the line from (x1,y1) to (x2,y2).
+// End-caps are perpendicular to the slab, then flat-cut back by `ch` to
+// match the chamfer language.
+function dStroke(x1, y1, x2, y2, w, ch) {
+  const dx = x2 - x1, dy = y2 - y1;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len, uy = dy / len;          // along
+  const px = -uy, py = ux;                     // perp
+  const hw = w / 2;
+  // Pull ends back by ch*0.5 so the cap is flush with perpendicular lines
+  const trim = Math.min(ch * 0.7, len * 0.2);
+  const ax = x1 + ux * trim, ay = y1 + uy * trim;
+  const bx = x2 - ux * trim, by = y2 - uy * trim;
+  // 4 corners
+  const p1 = [ax + px * hw, ay + py * hw];
+  const p2 = [bx + px * hw, by + py * hw];
+  const p3 = [bx - px * hw, by - py * hw];
+  const p4 = [ax - px * hw, ay - py * hw];
+  return `M ${p1[0]} ${p1[1]} L ${p2[0]} ${p2[1]} L ${p3[0]} ${p3[1]} L ${p4[0]} ${p4[1]} Z`;
+}
+
+// ── Octagonal ring (ㅇ) ──────────────────────────────────────────
+// Flat-top regular octagon inscribed in circle of radius R, centered (cx,cy).
+// Returns a combined path (outer + inner with even-odd winding).
+function octRing(cx, cy, R, w) {
+  // angles for flat-top 8-gon: start at 22.5° (π/8) from horizontal
+  const oct = (rad) => {
+    const pts = [];
+    for (let k = 0; k < 8; k++) {
+      const a = Math.PI / 8 + k * Math.PI / 4;
+      pts.push([cx + rad * Math.cos(a), cy + rad * Math.sin(a)]);
+    }
+    return pts;
+  };
+  const toPath = (pts) => 'M ' + pts.map(p => p.join(' ')).join(' L ') + ' Z';
+  const r = R - w;
+  return toPath(oct(R)) + ' ' + toPath(oct(r));
+}
+
+// ── Square ring (ㅁ) ─────────────────────────────────────────────
+function squareRing(x1, y1, x2, y2, w, ch) {
+  const outer = chamRect(x1, y1, x2, y2, ch, [1, 1, 1, 1]);
+  const ix1 = x1 + w, iy1 = y1 + w;
+  const ix2 = x2 - w, iy2 = y2 - w;
+  const ic = Math.max(0, ch - w * 0.4);
+  const inner = chamRect(ix1, iy1, ix2, iy2, ic, [1, 1, 1, 1]);
+  return outer + ' ' + inner;
+}
+
+// ───────────────────────────────────────────────────────────────────
+// GLYPH BUILDERS
+// Each returns array of path-d strings (all filled with fill-rule=evenodd).
+// Coordinate system: (0,0) top-left → (16,16) bottom-right.
+// ───────────────────────────────────────────────────────────────────
+
+// 젊 = ㅈ(초성) + ㅓ(중성, 오른쪽) + ㄻ(종성, 아래)
+// Layout (16×16):
+//   ㅈ    : (0..8,  0..7)
+//   ㅓ    : (8..16, 0..8)   — vertical stem at x=13, side bar at y=4
+//   ㄻ=ㄹ+ㅁ : (0..16, 8.5..15.5)
+function build_젊(w, ch) {
+  const P = [];
+  // ── ㅈ ──
+  // top horizontal bar
+  P.push(hStroke(0.5, 7.5, 1.2, w, ch));
+  // two 45° legs from just under the bar, splaying down-out
+  const top = 2.0;
+  const bot = 7.2;
+  P.push(dStroke(4.0, top, 1.2, bot, w, ch));   // left leg
+  P.push(dStroke(4.0, top, 6.8, bot, w, ch));   // right leg
+
+  // ── ㅓ (right side) ──
+  // vertical stem
+  P.push(vStroke(13.5, 0.5, 7.5, w, ch));
+  // side bar (to the LEFT of the stem)
+  P.push(hStroke(10.0, 13.5, 4.0, w, ch));
+
+  // ── ㄹ (left half of jongseong) ──
+  // Stylized ㄹ: 3 horizontals + 2 alternating verticals (Z-shape).
+  const yr1 = 8.8, yr2 = 12.0, yr3 = 15.3;
+  const xrL = 0.5, xrR = 7.0;
+  P.push(hStroke(xrL,  xrR,  yr1, w, ch));       // top h
+  P.push(vStroke(xrR,  yr1,  yr2, w, ch));       // right-down (top-half)
+  P.push(hStroke(xrL,  xrR,  yr2, w, ch));       // middle h
+  P.push(vStroke(xrL,  yr2,  yr3, w, ch));       // left-down (bottom-half)
+  P.push(hStroke(xrL,  xrR,  yr3, w, ch));       // bottom h
+
+  // ── ㅁ (right half of jongseong) ──
+  P.push(squareRing(9.0, 8.8, 15.5, 15.3, w, ch));
+
+  return P;
+}
+
+// 은 = ㅇ(초성) + ㅡ(중성) + ㄴ(종성)
+// Layout:
+//   ㅇ : centered top, box (4.5..11.5, 0.5..7.5) — size 7
+//   ㅡ : full-width bar at y=9
+//   ㄴ : left-vertical + bottom-horizontal across (0.5..15.5, 10.5..15.5)
+function build_은(w, ch) {
+  const P = [];
+  // ㅇ
+  const R = 3.5;
+  P.push(octRing(8.0, 4.0, R, w));
+  // ㅡ
+  P.push(hStroke(0.5, 15.5, 9.2, w, ch));
+  // ㄴ
+  P.push(vStroke(1.5, 10.8, 15.3, w, ch));
+  P.push(hStroke(0.5, 15.5, 15.3, w, ch));
+  return P;
+}
+
+// 공 = ㄱ(초성) + ㅗ(중성) + ㅇ(종성)
+// Layout:
+//   ㄱ : top-left, horizontal+right-down   (0..9, 0..6)
+//   ㅗ : center tick + full horizontal     (tick in 6..8, bar at y=8)
+//   ㅇ : bottom centered ring              (box 4.5..11.5, 9..15.5)
+function build_공(w, ch) {
+  const P = [];
+  // ㄱ: top horizontal + right descending vertical (shifted left so ㅗ tick has room)
+  P.push(hStroke(1.5, 10.5, 1.2, w, ch));
+  P.push(vStroke(10.0, 1.2, 5.5, w, ch));
+  // ㅗ: center vertical tick + full-width bar
+  P.push(vStroke(8.0, 5.0, 8.2, w, ch));
+  P.push(hStroke(0.5, 15.5, 8.2, w, ch));
+  // ㅇ: centered octagonal ring
+  const R = 3.2;
+  P.push(octRing(8.0, 12.4, R, w));
+  return P;
+}
+
+// 주 = ㅈ(초성) + ㅜ(중성)
+// Layout:
+//   ㅈ : top, wider than in 젊             (1..15, 0.5..7)
+//   ㅜ : bottom, full-width + descender    (bar y=9, tick x=8)
+function build_주(w, ch) {
+  const P = [];
+  // ㅈ: top h-bar + two splaying 45° legs
+  P.push(hStroke(1.5, 14.5, 1.2, w, ch));
+  P.push(dStroke(8.0, 2.0, 3.5, 7.0, w, ch));    // left leg
+  P.push(dStroke(8.0, 2.0, 12.5, 7.0, w, ch));   // right leg
+  // ㅜ: full bar + descending tick
+  P.push(hStroke(0.5, 15.5, 9.2, w, ch));
+  P.push(vStroke(8.0, 9.2, 15.3, w, ch));
+  return P;
+}
+
+const GLYPHS = { '젊': build_젊, '은': build_은, '공': build_공, '주': build_주 };
+
+// ───────────────────────────────────────────────────────────────────
+// Glyph React component
+// ───────────────────────────────────────────────────────────────────
+function Glyph({
+  char, size = 200, weight = 1.5, chamfer, showGrid = false,
+  color = '#000', bg = 'transparent', showGuides = false, strokeColor,
+  gridUnits = 16,
+}) {
+  const ch = chamfer ?? weight;
+  const builder = GLYPHS[char];
+  if (!builder) return <span style={{ width: size, height: size, display: 'inline-block' }} />;
+  let paths;
+  try { paths = builder(weight, ch); } catch (e) { paths = []; console.error(e); }
+
+  const gridLines = [];
+  if (showGrid) {
+    for (let i = 0; i <= gridUnits; i++) {
+      const p = (i / gridUnits) * 16;
+      const major = i % 4 === 0;
+      gridLines.push(
+        <line key={'v'+i} x1={p} y1={0} x2={p} y2={16}
+          stroke={major ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.06)'} strokeWidth={major ? 0.04 : 0.025} />,
+        <line key={'h'+i} x1={0} y1={p} x2={16} y2={p}
+          stroke={major ? 'rgba(0,0,0,0.18)' : 'rgba(0,0,0,0.06)'} strokeWidth={major ? 0.04 : 0.025} />
+      );
+    }
+  }
+
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width={size}
+      height={size}
+      style={{ display: 'block', background: bg, shapeRendering: 'geometricPrecision' }}
+    >
+      {showGrid && <g>{gridLines}</g>}
+      {paths.map((d, i) => (
+        <path key={i} d={d} fill={color} fillRule="evenodd" />
+      ))}
+      {strokeColor && paths.map((d, i) => (
+        <path key={'s'+i} d={d} fill="none" stroke={strokeColor} strokeWidth={0.04} />
+      ))}
+    </svg>
+  );
+}
+
+// ── SVG string export (for download) ──────────────────────────────
+function glyphToSVG(char, { size = 1000, weight = 1.5, chamfer, color = '#000' } = {}) {
+  const ch = chamfer ?? weight;
+  const builder = GLYPHS[char];
+  if (!builder) return '';
+  const paths = builder(weight, ch);
+  const body = paths.map(d => `  <path d="${d}" fill="${color}" fill-rule="evenodd"/>`).join('\n');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="${size}" height="${size}">
+${body}
+</svg>`;
+}
+
+function downloadSVG(char, opts) {
+  const svg = glyphToSVG(char, opts);
+  const blob = new Blob([svg], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `${char}.svg`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 500);
+}
+
+Object.assign(window, { Glyph, glyphToSVG, downloadSVG, GLYPHS });
+
+</script>
+<script type="text/babel">
+// ── inlined from symbols/Symbols.jsx (rebuilt bundle) ──
+// symbols/Symbols.jsx — v0.4
+// Three-symbol hierarchy for Chuk DS.
+// v0.4 adds variant support for Gear and Iceberg to explore
+// sub-symbol consistency with the Chuk (Core) symbol.
+
+// ── 축 — unchanged from v0.3 ──────────────────────────────────
+function ChukSymbol({
+  size = 280, color = '#141414', accent = '#d9531e', variant = 'final',
+}) {
+  const VB = 600, cx = VB / 2, cy = VB / 2, R = VB * 0.38;
+  const V = {
+    v0:    { thin: 6,  thick: 38, dotR: 40, dotColor: accent,   dotShape: 'circle' },
+    value: { thin: 6,  thick: 38, dotR: 40, dotColor: '#9a9a9a', dotShape: 'circle' },
+    hue:   { thin: 6,  thick: 38, dotR: 40, dotColor: '#141414', dotShape: 'circle' },
+    scale: { thin: 3,  thick: 52, dotR: 22, dotColor: accent,   dotShape: 'circle' },
+    shape: { thin: 6,  thick: 38, dotR: 32, dotColor: accent,   dotShape: 'octagon' },
+    final: { thin: 3,  thick: 50, dotR: 20, dotColor: accent,   dotShape: 'octagon' },
+  }[variant] || {};
+  const { thin, thick, dotR, dotColor, dotShape } = V;
+  const rays = [0, 45, 90, 135].map(d => {
+    const rad = d * Math.PI / 180;
+    const dx = Math.cos(rad) * R, dy = Math.sin(rad) * R;
+    return { x1: cx - dx, y1: cy - dy, x2: cx + dx, y2: cy + dy };
+  });
+  const octPts = [];
+  for (let k = 0; k < 8; k++) {
+    const a = Math.PI / 8 + k * Math.PI / 4;
+    octPts.push([cx + dotR * Math.cos(a), cy + dotR * Math.sin(a)]);
+  }
+  const octD = 'M ' + octPts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+  return (
+    <svg viewBox={`0 0 ${VB} ${VB}`} width={size} height={size} style={{ display: 'block' }}>
+      {rays.map((r, i) => (
+        <line key={i} x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2}
+          stroke={color} strokeWidth={thin} strokeLinecap="butt" />
+      ))}
+      <rect x={cx - thick / 2} y={cy - R} width={thick} height={R * 2} fill={color} />
+      {dotShape === 'octagon'
+        ? <path d={octD} fill={dotColor} />
+        : <circle cx={cx} cy={cy} r={dotR} fill={dotColor} />}
+    </svg>
+  );
+}
+
+// ── Gear — variants ────────────────────────────────────────────
+//   v0      — original (square teeth, 90° ends)
+//   vertex  — Proposal A: add small accent octagon at the exact center (vertex motif)
+//   chamfer — Proposal B: each tooth end cut at 45° (edge-language law)
+//   final   — A + B combined: chamfered teeth + inner vertex accent
+function GearSymbol({ size = 280, color = '#141414', accent = '#d9531e', variant = 'final' }) {
+  const VB = 600, cx = VB / 2, cy = VB / 2;
+  const R_outer = VB * 0.38;
+  const R_inner = VB * 0.28;
+  const R_hole = VB * 0.10;
+  const teeth = 8;
+
+  const applyChamfer = variant === 'chamfer';  // 'final' keeps straight square teeth (Proposal A) + vertex
+  const showVertex   = variant === 'vertex'  || variant === 'final';
+
+  // Half-angle subtended by one tooth at the hub. Drives tooth width.
+  const baseToothHalf = Math.PI / teeth * 0.42;
+
+  // Each tooth is built as a RECTANGULAR BLOCK:
+  //   - its two side walls are parallel (rise perpendicularly from the hub circle)
+  //   - its top is a flat arc-chord at R_outer
+  //   - between teeth the gap drops at 90° to the flat valley floor at R_inner
+  // This matches the user's reference (Proposal A — straight teeth, 90° valleys).
+  const pts = [];
+  for (let i = 0; i < teeth; i++) {
+    const a = i * (2 * Math.PI / teeth);
+    // perpendicular offset at the hub (tangent direction) to produce parallel walls
+    const tooth_w = Math.sin(baseToothHalf) * R_inner * 2; // tooth width at the hub
+    const tanX = -Math.sin(a), tanY = Math.cos(a);         // unit tangent at angle a
+    const radX =  Math.cos(a), radY =  Math.sin(a);        // unit radial at angle a
+
+    // inner-left (at hub)
+    pts.push([cx + radX * R_inner - tanX * tooth_w/2,
+              cy + radY * R_inner - tanY * tooth_w/2]);
+    // outer-left (straight up along radial)
+    pts.push([cx + radX * R_outer - tanX * tooth_w/2,
+              cy + radY * R_outer - tanY * tooth_w/2]);
+    if (applyChamfer) {
+      // chamfer corners on the tooth top
+      const ch = (R_outer - R_inner) * 0.22;
+      pts.push([cx + radX * R_outer - tanX * tooth_w/2 + tanX * ch - radX * ch,
+                cy + radY * R_outer - tanY * tooth_w/2 + tanY * ch - radY * ch]);
+      pts.push([cx + radX * R_outer + tanX * tooth_w/2 - tanX * ch - radX * ch,
+                cy + radY * R_outer + tanY * tooth_w/2 - tanY * ch - radY * ch]);
+    }
+    // outer-right
+    pts.push([cx + radX * R_outer + tanX * tooth_w/2,
+              cy + radY * R_outer + tanY * tooth_w/2]);
+    // inner-right (at hub)
+    pts.push([cx + radX * R_inner + tanX * tooth_w/2,
+              cy + radY * R_inner + tanY * tooth_w/2]);
+    // valley floor between this tooth and the next — follow hub arc
+    const aNext = (i + 1) * (2 * Math.PI / teeth);
+    const tanXn = -Math.sin(aNext), tanYn = Math.cos(aNext);
+    const radXn =  Math.cos(aNext), radYn =  Math.sin(aNext);
+    pts.push([cx + radXn * R_inner - tanXn * tooth_w/2,
+              cy + radYn * R_inner - tanYn * tooth_w/2]);
+  }
+  const outerPath = 'M ' + pts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+
+  // inner octagonal hole (unchanged)
+  const holePts = [];
+  for (let k = 0; k < 8; k++) {
+    const a = Math.PI / 8 + k * Math.PI / 4;
+    holePts.push([cx + R_hole * Math.cos(a), cy + R_hole * Math.sin(a)]);
+  }
+  const holePath = 'M ' + holePts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+
+  // vertex accent — small orange octagon inside the hole
+  const vertR = R_hole * 0.48;
+  const vertPts = [];
+  for (let k = 0; k < 8; k++) {
+    const a = Math.PI / 8 + k * Math.PI / 4;
+    vertPts.push([cx + vertR * Math.cos(a), cy + vertR * Math.sin(a)]);
+  }
+  const vertPath = 'M ' + vertPts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+
+  return (
+    <svg viewBox={`0 0 ${VB} ${VB}`} width={size} height={size} style={{ display: 'block' }}>
+      {/* gear body — when vertex is active, fill the inner octagon hole with accent instead of cutting it */}
+      {showVertex
+        ? <>
+            <path d={outerPath} fill={color} />
+            <path d={holePath} fill={accent} />
+          </>
+        : <path d={outerPath + ' ' + holePath} fill={color} fillRule="evenodd" />
+      }
+    </svg>
+  );
+}
+
+// ── Iceberg — variants ─────────────────────────────────────────
+//   v0      — original (solid tip + outline body, rounded-ish lower facets)
+//   vertex  — Proposal A: add small octagonal hollow at body's mass-center
+//   chamfer — Proposal B: redraw lower body with strict 45° facets
+//   final   — A + B combined
+function IcebergSymbol({ size = 280, color = '#141414', accent = '#d9531e', variant = 'final', waterline = '#4a4a4a' }) {
+  const VB = 600, cx = VB / 2;
+  const waterY = VB * 0.35;
+  const tipTop = waterY - VB * 0.24;
+
+  const applyChamfer = variant === 'chamfer' || variant === 'final';
+  const showVertex   = variant === 'vertex'  || variant === 'final';
+
+  // Above-water tip (strict 45° triangle-ish) — same across variants
+  const topPts = [
+    [cx - VB * 0.14, waterY],
+    [cx - VB * 0.04, tipTop],
+    [cx + VB * 0.05, tipTop - VB * 0.03],
+    [cx + VB * 0.17, waterY],
+  ];
+
+  // Below-water body.
+  //   chamfer/final → asymmetric polygon using ONLY 0°/45°/90°/135° edges.
+  //     Irregular on purpose — Iceberg expresses uncertainty & hidden depth,
+  //     unlike the symmetric axis/gear. 135° is the "variation" of 45° that
+  //     tilts the form without breaking the octagonal grammar.
+  //   otherwise   → original organic polygon.
+  let botPts;
+  if (applyChamfer) {
+    // All diagonal moves have |dx|==|dy| so every slope is ±45° (= 45°/135°).
+    // Traced clockwise from top-left, then back to start.
+    botPts = [
+      [cx - VB * 0.36, waterY],                 // A  top-left at waterline
+      [cx + VB * 0.30, waterY],                 // B  top-right at waterline (horizontal)
+      [cx + VB * 0.40, waterY + VB * 0.10],     // C  45° down-right
+      [cx + VB * 0.40, waterY + VB * 0.22],     // D  straight down (90°)
+      [cx + VB * 0.22, waterY + VB * 0.40],     // E  135° down-left  (dx=-0.18,dy=+0.18)
+      [cx + VB * 0.04, waterY + VB * 0.40],     // F  horizontal bottom
+      [cx - VB * 0.18, waterY + VB * 0.18],     // G  135° up-left    (dx=-0.22,dy=-0.22)
+      [cx - VB * 0.42, waterY + VB * 0.18],     // H  horizontal left
+      [cx - VB * 0.42, waterY + VB * 0.12],     // I  vertical up (90°)
+      // close to A: dx=+0.06, dy=-0.12  — NOT 45°. Fix by inserting one more pt.
+      [cx - VB * 0.36, waterY + VB * 0.06],     // J  45° up-right   (dx=+0.06,dy=-0.06)
+      // J → A : dx=0, dy=-0.06  (vertical) ✓
+    ];
+  } else {
+    const botBottomY = VB * 0.90;
+    botPts = [
+      [cx - VB * 0.30, waterY],
+      [cx + VB * 0.32, waterY],
+      [cx + VB * 0.38, waterY + VB * 0.12],
+      [cx + VB * 0.24, waterY + VB * 0.38],
+      [cx + VB * 0.06, botBottomY],
+      [cx - VB * 0.14, botBottomY - VB * 0.04],
+      [cx - VB * 0.36, waterY + VB * 0.30],
+      [cx - VB * 0.40, waterY + VB * 0.14],
+    ];
+  }
+
+  const topPath = 'M ' + topPts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+  const botPath = 'M ' + botPts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+
+  // Vertex octagon — placed slightly off-center to reinforce irregularity
+  const vCx = cx - VB * 0.04;
+  const vCy = waterY + VB * 0.26;
+  const vR  = VB * 0.085;
+  const vPts = [];
+  for (let k = 0; k < 8; k++) {
+    const a = Math.PI / 8 + k * Math.PI / 4;
+    vPts.push([vCx + vR * Math.cos(a), vCy + vR * Math.sin(a)]);
+  }
+  const vPath = 'M ' + vPts.map(p => p.map(v => v.toFixed(2)).join(',')).join(' L ') + ' Z';
+
+  return (
+    <svg viewBox={`0 0 ${VB} ${VB}`} width={size} height={size} style={{ display: 'block' }}>
+      {/* waterline */}
+      <line x1={VB * 0.08} y1={waterY} x2={VB * 0.92} y2={waterY}
+        stroke={waterline} strokeWidth={2} strokeDasharray="6 6" opacity={0.55} />
+      {/* above-water solid */}
+      <path d={topPath} fill={color} />
+      {/* below-water */}
+      <path d={botPath} fill={color} opacity={0.22} />
+      <path d={botPath} fill="none" stroke={color} strokeWidth={3} />
+      {/* vertex accent */}
+      {showVertex && <path d={vPath} fill={accent} />}
+    </svg>
+  );
+}
+
+window.ChukSymbol = ChukSymbol;
+window.GearSymbol = GearSymbol;
+window.IcebergSymbol = IcebergSymbol;
+
+</script>
+<script type="text/babel">
+// ── inlined from ds-v04.jsx (rebuilt bundle) ──
+// ds-v04.jsx — Chuk Design System v0.4
+// Review round: Sub-symbol refinement.
+// Goal — make Gear & Iceberg share the same visual grammar as 축:
+//   (A) Octagonal vertex motif repeated across all three symbols.
+//   (B) 45° chamfer law applied without exception.
+//   (C) Solid/outline rhythm — optional, kept as-is.
+const { useState } = React;
+const WINNER = 'final';
+
+function App() {
+  return (
+    <div className="page">
+      <Masthead />
+      <Hero />
+      <SubReview />
+      <Hierarchy />
+      <Triad />
+      <Rules />
+      <TypeStress />
+      <Combinations />
+      <Palette />
+      <Footer />
+    </div>
+  );
+}
+
+function Masthead() {
+  return (
+    <div className="masthead">
+      <div className="brand">축 <span className="sep">/</span> CHUK DESIGN SYSTEM</div>
+      <div className="meta">v0.4 · 2026 · Sub-Symbol Refinement</div>
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <div className="hero">
+      <div>
+        <div className="eyebrow">Design System v0.4 — Release Notes</div>
+        <h1>하나의 <span className="mark">축</span>,<br/>두 개의 보조,<br/>하나의 문법.</h1>
+        <p className="lede">
+          v0.4는 보조 심볼 <b>Gear</b>·<b>Iceberg</b>가 축과 같은 문법을 공유하도록 재설계했습니다.
+          핵심은 두 가지: <b>(A) 팔각형 정점(Octagonal Vertex)</b>을 세 심볼 모두에 심고,
+          <b>(B) 45° 챔퍼 법칙</b>을 예외 없이 적용하는 것. 두 제안을 결합한 <b>(A + B) final</b>을 채택했습니다.
+        </p>
+      </div>
+      <div className="hero-mark">
+        <ChukSymbol size={'85%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+      </div>
+    </div>
+  );
+}
+
+function SubReview() {
+  const rows = [
+    {
+      tag: 'PROPOSAL A', title: '팔각 정점 반복',
+      subtitle: 'Octagonal Vertex Motif',
+      gearVar: 'vertex', iceVar: 'vertex',
+      verdict: '중심에 "정점" 하나씩. 축과의 문법적 반복이 생긴다. 다만 가장자리 직각(Gear)·부드러운 면(Iceberg)이 남아 완전히 통일되진 않음.',
+    },
+    {
+      tag: 'PROPOSAL B', title: '45° 챔퍼 법칙',
+      subtitle: 'Edge-Language Law',
+      gearVar: 'chamfer', iceVar: 'chamfer',
+      verdict: '모든 꺾임이 45° 면으로 정리. 제조업적 디테일과 기하학적 리듬이 확립되지만, 중심 포인트가 없어 Core와의 연결이 약함.',
+    },
+    {
+      tag: 'FINAL · A + B', title: '정점 + 챔퍼 결합',
+      subtitle: 'Combined · Selected',
+      gearVar: 'final', iceVar: 'final', winner: true,
+      verdict: '형태 반복(A) × 표면 규칙(B). 세 심볼이 "같은 장인의 손"에서 나온 것처럼 읽힌다. → v0.4 채택.',
+    },
+  ];
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">01</div>
+        <h2>Sub-Symbol Review · Gear × Iceberg</h2>
+        <div className="caption">3 proposals → 1 winner</div>
+      </div>
+      <div className="subreview">
+        {rows.map((r, i) => (
+          <div key={i} className={"srv" + (r.winner ? ' winner' : '')}>
+            <div className="hd">
+              <div className="tag">{r.tag}</div>
+              {r.winner && <div className="mark">★ Selected</div>}
+            </div>
+            <h5>{r.title}</h5>
+            <div className="sub">{r.subtitle}</div>
+            <div className="pair">
+              <div className="box">
+                <div className="lbl">Sub A · Gear</div>
+                <div className="stage">
+                  <GearSymbol size={'100%'} color={r.winner ? '#f4f3ef' : '#141414'} accent="#d9531e" variant={r.gearVar}/>
+                </div>
+              </div>
+              <div className="box">
+                <div className="lbl">Sub B · Iceberg</div>
+                <div className="stage">
+                  <IcebergSymbol size={'100%'} color={r.winner ? '#f4f3ef' : '#141414'} accent="#d9531e" variant={r.iceVar}/>
+                </div>
+              </div>
+            </div>
+            <div className="verdict">{r.verdict}</div>
+          </div>
+        ))}
+      </div>
+      <div className="note">
+        팔각 정점 모티프는 세 심볼을 하나의 어휘로 묶고, 45° 챔퍼는 그 어휘를 한 문체로 다듬습니다.
+        Iceberg의 이중 톤(수면 위/아래)은 <b>의미 층</b>을 표현하므로 통일 대상에서 제외.
+      </div>
+    </section>
+  );
+}
+
+function Hierarchy() {
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">02</div>
+        <h2>Symbol Hierarchy</h2>
+        <div className="caption">Core × 1 · Sub × 2</div>
+      </div>
+      <div className="hierarchy">
+        <div className="core-row">
+          <div className="node core">
+            <ChukSymbol size={120} color="#141414" accent="#d9531e" variant={WINNER}/>
+            <div className="role">Core Symbol</div>
+            <div className="name">축 · Axis</div>
+            <div className="concept">RELIABLE · 신뢰</div>
+          </div>
+        </div>
+        <svg width="100%" height="48" viewBox="0 0 1000 48" preserveAspectRatio="none">
+          <line x1="500" y1="0" x2="500" y2="24" stroke="#141414" strokeWidth="1.5"/>
+          <line x1="260" y1="24" x2="740" y2="24" stroke="#141414" strokeWidth="1.5"/>
+          <line x1="260" y1="24" x2="260" y2="48" stroke="#141414" strokeWidth="1.5"/>
+          <line x1="740" y1="24" x2="740" y2="48" stroke="#141414" strokeWidth="1.5"/>
+        </svg>
+        <div className="sub-row">
+          <div className="node">
+            <GearSymbol size={96} color="#141414" accent="#d9531e" variant={WINNER}/>
+            <div className="role">Sub Symbol A</div>
+            <div className="name">톱니바퀴 · Gear</div>
+            <div className="concept">SEAMLESS · 절차</div>
+          </div>
+          <div className="node">
+            <IcebergSymbol size={96} color="#141414" accent="#d9531e" variant={WINNER}/>
+            <div className="role">Sub Symbol B</div>
+            <div className="name">빙산 · Iceberg</div>
+            <div className="concept">MEANINGFUL · 의미</div>
+          </div>
+        </div>
+      </div>
+      <div className="note">
+        세 심볼이 공유하는 것: ① <b>팔각형 정점</b> (축의 접점 / Gear의 중심 / 빙산의 무게중심),
+        ② <b>45° 챔퍼 종단</b>, ③ <b>동일한 8방향 축</b>.
+      </div>
+    </section>
+  );
+}
+
+function Triad() {
+  const rows = [
+    { primary: true, name: '축', en: 'Axis', concept: 'Reliable · 신뢰',
+      role: 'Core', keywords: ['안정적', '일관적', '흔들리지 않는'],
+      desc: '무게를 받치는 수직의 축. 시스템의 모든 것이 이 한 선 위에서 균형을 잡는다.',
+      symbol: <ChukSymbol size={'88%'} color="#f4f3ef" accent="#d9531e" variant={WINNER}/> },
+    { name: '톱니바퀴', en: 'Gear', concept: 'Seamless · 절차',
+      role: 'Sub A', keywords: ['연속적', '연결된', '맞물린'],
+      desc: '하나가 돌면 다음이 돈다. 끊김 없이 맞물려 작동하는 흐름과 단계의 은유.',
+      symbol: <GearSymbol size={'88%'} color="#141414" accent="#d9531e" variant={WINNER}/> },
+    { name: '빙산', en: 'Iceberg', concept: 'Meaningful · 의미',
+      role: 'Sub B', keywords: ['자연스러운', '본질적', '보이지 않는 깊이'],
+      desc: '수면 위는 일부일 뿐. 보이는 것 아래에 더 많은 의미와 본질이 잠겨 있다.',
+      symbol: <IcebergSymbol size={'88%'} color="#141414" accent="#d9531e" variant={WINNER}/> },
+  ];
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">03</div>
+        <h2>Metaphor · Concept · Role</h2>
+        <div className="caption">시각 메타포 → 개념 → 역할</div>
+      </div>
+      <div className="triad">
+        {rows.map((r, i) => (
+          <div key={i} className={"cell" + (r.primary ? ' primary' : '')}>
+            <div className="cap">{r.role}</div>
+            <h3>{r.name} <span className="en">· {r.en}</span></h3>
+            <div className="glyph-frame">{r.symbol}</div>
+            <dl>
+              <dt>Concept</dt><dd>{r.concept}</dd>
+              <dt>Keywords</dt><dd>{r.keywords.join(' · ')}</dd>
+            </dl>
+            <div className="desc">{r.desc}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Rules() {
+  const items = [
+    { n: 'R1', h: '팔각형 마스터 그리드', p: '모든 심볼·자모는 팔각형 바운딩 박스와 8방향 축 위에서 설계된다.' },
+    { n: 'R2', h: '허용 각도', p: '0° · 45° · 90° · 135° 네 방향만. 원은 정팔각형으로 번역된다.' },
+    { n: 'R3', h: '축의 무게 위계', p: '세로 축 > 방사선 > 접점. 접점은 방사선보다 작게.' },
+    { n: 'R4', h: '45° 챔퍼 법칙', p: '모든 꺾임·종단은 45°로 잘라낸다. 심볼·글자 예외 없음. (v0.4에서 Gear 이빨·Iceberg 파셋에 강제 적용)' },
+    { n: 'R5', h: '심볼 위계', p: '축은 핵심, 톱니·빙산은 보조. 보조는 축 없이는 단독으로 쓰이지 않는다.' },
+    { n: 'R6', h: '팔각 정점 반복', p: '세 심볼 모두 "팔각형 정점"을 최소 하나씩 갖는다. 축—접점 / Gear—중심 / Iceberg—무게중심. (v0.4 신규)' },
+    { n: 'R7', h: '색 위계', p: '잉크(#141414) · 크림(#f4f3ef) · 레드 액센트(#d9531e). 레드는 오직 "팔각 정점"에만.' },
+    { n: 'R8', h: '타입 · 심볼 정렬', p: '글자 "공"의 가운데 점과 심볼의 팔각 정점은 같은 기준선 위에 놓인다.' },
+  ];
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">04</div>
+        <h2>System Rules</h2>
+        <div className="caption">8 Rules · v0.4 updated R4·R6·R7</div>
+      </div>
+      <div className="rules">
+        {items.map(r => (
+          <div key={r.n} className="rule">
+            <div className="n">{r.n}</div>
+            <h4>{r.h}</h4>
+            <p>{r.p}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TypeStress() {
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">05</div>
+        <h2>Type System · Stress Test</h2>
+        <div className="caption">"젊은공주" 4글자에서 배운 것</div>
+      </div>
+      <div className="typeboard">
+        <TypeCell label="Core" char="공" note="축이 바로 드러나는 기준 글자" />
+        <TypeCell label="Hollow" char="은" note="ㅇ의 팔각형 + 받침 구조" />
+        <TypeCell label="Complex" char="젊" note="종성 클러스터(ㄻ)의 한계 사례" />
+        <TypeCell label="Diagonal" char="주" note="ㅈ·ㅜ의 45° 대각 조합" />
+      </div>
+      <div className="note">
+        결론: 기본 규칙은 유지 가능. 종성 ㄹ의 형태와 ㅈ 다리의 교차각은 v0.5 과제로 이월.
+      </div>
+    </section>
+  );
+}
+
+function TypeCell({ label, char, note }) {
+  const HasGlyph = typeof window.Glyph === 'function';
+  return (
+    <div className="tb-cell">
+      <div className="label">{label}</div>
+      <div style={{width: 140, height: 140}}>
+        {HasGlyph
+          ? <window.Glyph char={char} size={140} weight={1.8} chamfer={1.8}/>
+          : <div style={{fontSize: 120, fontWeight: 700, lineHeight: 1, textAlign:'center'}}>{char}</div>}
+      </div>
+      <div className="char">{char} · {note}</div>
+    </div>
+  );
+}
+
+function Combinations() {
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">06</div>
+        <h2>Combinations</h2>
+        <div className="caption">축 + 보조의 결합 용법</div>
+      </div>
+      <div className="combo">
+        <ComboCell title="축 단독" tag="HERO">
+          <div style={{display:'grid', placeItems:'center', width:'100%', height:'100%'}}>
+            <div style={{width:'60%', maxWidth: 220, aspectRatio:'1/1'}}>
+              <ChukSymbol size={'100%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+            </div>
+          </div>
+          <p>메인 브랜드 표기. 제품 헤로, 공식 문서 커버에 사용.</p>
+        </ComboCell>
+        <ComboCell title="축 + 톱니바퀴" tag="PROCESS">
+          <div style={{display:'flex', alignItems:'center', gap: '8%', justifyContent:'center', width:'100%'}}>
+            <div style={{flex:'0 1 50%', maxWidth: 180, aspectRatio:'1/1'}}>
+              <ChukSymbol size={'100%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+            </div>
+            <div style={{width:1, height: '50%', background:'#141414', opacity:0.3, flex:'0 0 1px'}}/>
+            <div style={{flex:'0 1 32%', maxWidth: 110, aspectRatio:'1/1'}}>
+              <GearSymbol size={'100%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+            </div>
+          </div>
+          <p>프로세스·운영·자동화. 두 심볼 모두 팔각 정점 + 45° 챔퍼.</p>
+        </ComboCell>
+        <ComboCell title="축 + 빙산" tag="DEPTH">
+          <div style={{display:'flex', alignItems:'center', gap: '8%', justifyContent:'center', width:'100%'}}>
+            <div style={{flex:'0 1 50%', maxWidth: 180, aspectRatio:'1/1'}}>
+              <ChukSymbol size={'100%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+            </div>
+            <div style={{width:1, height: '50%', background:'#141414', opacity:0.3, flex:'0 0 1px'}}/>
+            <div style={{flex:'0 1 32%', maxWidth: 110, aspectRatio:'1/1'}}>
+              <IcebergSymbol size={'100%'} color="#141414" accent="#d9531e" variant={WINNER}/>
+            </div>
+          </div>
+          <p>본질·리서치. 수중 무게중심의 팔각 정점이 "보이지 않는 핵심"을 표현.</p>
+        </ComboCell>
+      </div>
+      <div className="note">
+        세 심볼을 동시에 배치하지 않습니다. 하나의 서사에는 <b>축 + 하나의 보조</b>만.
+      </div>
+    </section>
+  );
+}
+
+function ComboCell({ title, tag, children }) {
+  const arr = React.Children.toArray(children);
+  const stage = arr[0]; const body = arr.slice(1);
+  return (
+    <div className="combo-cell">
+      <div className="head"><h4>{title}</h4><div className="tag">{tag}</div></div>
+      <div className="stage">{stage}</div>
+      {body}
+    </div>
+  );
+}
+
+function Palette() {
+  const swatches = [
+    { n: 'Ink', c: '#141414', fg: '#f4f3ef' },
+    { n: 'Ink-2', c: '#4a4a4a', fg: '#f4f3ef' },
+    { n: 'Cream', c: '#f4f3ef', fg: '#141414', border: true },
+    { n: 'Paper', c: '#faf9f5', fg: '#141414', border: true },
+    { n: 'Accent', c: '#d9531e', fg: '#f4f3ef' },
+  ];
+  return (
+    <section>
+      <div className="section-head">
+        <div className="num">07</div>
+        <h2>Palette</h2>
+        <div className="caption">5 tokens · Accent는 팔각 정점에만</div>
+      </div>
+      <div className="palette">
+        {swatches.map(s => (
+          <div key={s.n} className="sw" style={{
+            background: s.c, color: s.fg,
+            borderRight: s.border ? '1px solid #e6e1d6' : undefined,
+          }}>
+            <div className="swn">{s.n}</div>
+            <div className="swc">{s.c.toUpperCase()}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <span>축 · <b>Design System v0.4</b></span>
+      <span>Octagonal Grid · Vertex Motif · 45° Chamfer Law</span>
+      <span>© Chuk 2026</span>
+    </footer>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+
+</script>
+</body>
+</html>
