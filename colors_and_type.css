@@ -1,0 +1,272 @@
+/* =========================================================================
+   AXIS (축) — Design Tokens
+   AI Font System / Design System Generator
+   ========================================================================= */
+
+/* --- Fonts --------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Thin.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-ExtraLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Light.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url('fonts/NotoSansKR-Black.ttf') format('truetype');
+}
+
+:root {
+  /* ==== Type Families =================================================== */
+  /* Primary Latin + mono: JetBrains Mono & IBM Plex Mono are loaded
+     from Google Fonts in index.html. For prod, self-host. */
+  --font-display: 'JetBrains Mono', 'Noto Sans KR', ui-monospace, monospace;
+  --font-body: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-kr: 'Noto Sans KR', -apple-system, sans-serif;
+
+  /* ==== Color — Foundation ============================================== */
+  /* Axis is black on white. Neutrals carry everything; accent is minimal. */
+  --ink-000: #FFFFFF;          /* paper */
+  --ink-050: #F7F7F5;          /* card / subtle panel */
+  --ink-100: #EFEFEC;          /* divider bg */
+  --ink-200: #E2E2DE;          /* line / border strong */
+  --ink-300: #C8C8C2;          /* disabled / placeholder */
+  --ink-400: #9A9A93;          /* tertiary text */
+  --ink-500: #6B6B65;          /* secondary text */
+  --ink-600: #3F3F3B;          /* body — alt */
+  --ink-700: #1E1E1C;          /* body */
+  --ink-900: #0A0A0A;          /* ink — primary */
+
+  /* Accent — used sparingly, for registration marks, "active" states, and
+     plate-markers. Borrowed from the navy in the Mitsukoshi reference. */
+  --mark-navy: #1B2347;
+  --mark-red:  #C8281E;        /* registration red — calibration only */
+  --mark-cyan: #00A6B8;        /* CMYK-style marker */
+
+  /* Paper textures */
+  --paper-cream: #F4F1EA;
+  --paper-grid:  #EFEFEC;
+
+  /* ==== Semantic Color ================================================== */
+  --fg-1: var(--ink-900);      /* primary text */
+  --fg-2: var(--ink-700);      /* body */
+  --fg-3: var(--ink-500);      /* secondary */
+  --fg-4: var(--ink-400);      /* tertiary / meta */
+  --fg-disabled: var(--ink-300);
+  --fg-inverse: var(--ink-000);
+
+  --bg-1: var(--ink-000);      /* paper */
+  --bg-2: var(--ink-050);      /* card */
+  --bg-3: var(--ink-100);      /* well */
+  --bg-inverse: var(--ink-900);
+
+  --line-1: var(--ink-200);    /* default border */
+  --line-2: var(--ink-100);    /* subtle divider */
+  --line-strong: var(--ink-900);
+
+  --accent: var(--ink-900);    /* primary action */
+  --accent-mark: var(--mark-red); /* calibration / registration mark */
+
+  /* Semantic status (muted — never saturated candy) */
+  --ok:    #2F6B3B;
+  --warn:  #8A6B1A;
+  --err:   var(--mark-red);
+  --info:  var(--mark-navy);
+
+  /* ==== Type Scale — modular, ratio 1.250 (major third) ================= */
+  --fs-12: 0.75rem;     /* 12 — meta, labels, plate numbers */
+  --fs-13: 0.8125rem;   /* 13 — caption */
+  --fs-14: 0.875rem;    /* 14 — UI small */
+  --fs-16: 1rem;        /* 16 — body */
+  --fs-18: 1.125rem;    /* 18 — body large */
+  --fs-22: 1.375rem;    /* 22 — h5 */
+  --fs-28: 1.75rem;     /* 28 — h4 */
+  --fs-36: 2.25rem;     /* 36 — h3 */
+  --fs-48: 3rem;        /* 48 — h2 */
+  --fs-64: 4rem;        /* 64 — h1 */
+  --fs-96: 6rem;        /* 96 — display */
+  --fs-144: 9rem;       /* 144 — hero display */
+
+  /* Leading — tight for display, open for body. Korean prefers 1.5–1.7. */
+  --lh-tight: 1.02;
+  --lh-snug:  1.15;
+  --lh-body:  1.55;
+  --lh-kr:    1.65;     /* Hangul body */
+
+  /* Tracking — mono/latin display goes negative at large sizes. */
+  --tr-display: -0.02em;
+  --tr-tight:   -0.01em;
+  --tr-normal:  0;
+  --tr-wide:    0.04em;  /* small caps / eyebrow */
+  --tr-eyebrow: 0.18em;  /* UPPERCASE MONO LABELS */
+
+  /* ==== Spacing — 4px base, 8px rhythm ================================== */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  /* ==== Radii — mostly zero. Axis is hard-edged. ======================== */
+  --r-0: 0px;
+  --r-1: 2px;           /* inputs / buttons, almost square */
+  --r-2: 4px;
+  --r-pill: 999px;      /* only for tags/plate markers */
+
+  /* ==== Borders & Rules ================================================= */
+  --bw-hair: 0.5px;
+  --bw-1: 1px;
+  --bw-2: 2px;
+  --bw-3: 3px;
+
+  /* ==== Shadows — essentially none. Use rules, not elevation. =========== */
+  --shadow-none: none;
+  --shadow-1: 0 1px 0 0 var(--line-1);                         /* under a card */
+  --shadow-2: 0 0 0 1px var(--line-1);                         /* box-outline */
+  --shadow-focus: 0 0 0 2px var(--ink-000), 0 0 0 4px var(--ink-900);
+
+  /* ==== Motion ========================================================== */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 560ms;
+
+  /* ==== Grids =========================================================== */
+  --grid-col-w: 72px;
+  --grid-gutter: 24px;
+  --grid-baseline: 8px;
+  --grid-line: rgba(10, 10, 10, 0.06);
+
+  /* ==== Semantic Text Styles (sizes) ==================================== */
+  --t-display-lg: 700 var(--fs-144)/var(--lh-tight) var(--font-display);
+  --t-display:    700 var(--fs-96)/var(--lh-tight) var(--font-display);
+  --t-h1:         600 var(--fs-64)/var(--lh-snug) var(--font-display);
+  --t-h2:         600 var(--fs-48)/var(--lh-snug) var(--font-display);
+  --t-h3:         500 var(--fs-36)/var(--lh-snug) var(--font-body);
+  --t-h4:         500 var(--fs-28)/1.3 var(--font-body);
+  --t-h5:         500 var(--fs-22)/1.35 var(--font-body);
+  --t-body-lg:    400 var(--fs-18)/var(--lh-body) var(--font-body);
+  --t-body:       400 var(--fs-16)/var(--lh-body) var(--font-body);
+  --t-body-sm:    400 var(--fs-14)/var(--lh-body) var(--font-body);
+  --t-caption:    400 var(--fs-13)/1.4 var(--font-body);
+  --t-meta:       500 var(--fs-12)/1.3 var(--font-mono);
+  --t-eyebrow:    500 var(--fs-12)/1 var(--font-mono);  /* uppercase w/ tracking */
+  --t-mono:       400 var(--fs-14)/var(--lh-body) var(--font-mono);
+  --t-plate:      500 var(--fs-12)/1 var(--font-mono); /* print-plate label */
+}
+
+/* =========================================================================
+   Element defaults — opt-in via `.axis` or root scope.
+   ========================================================================= */
+
+.axis, html.axis, body.axis {
+  color: var(--fg-1);
+  background: var(--bg-1);
+  font: var(--t-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.axis h1 { font: var(--t-h1); letter-spacing: var(--tr-display); margin: 0; }
+.axis h2 { font: var(--t-h2); letter-spacing: var(--tr-display); margin: 0; }
+.axis h3 { font: var(--t-h3); letter-spacing: var(--tr-tight); margin: 0; }
+.axis h4 { font: var(--t-h4); letter-spacing: var(--tr-tight); margin: 0; }
+.axis h5 { font: var(--t-h5); margin: 0; }
+.axis p  { font: var(--t-body); color: var(--fg-2); margin: 0 0 1em; text-wrap: pretty; }
+.axis code, .axis pre, .axis kbd { font-family: var(--font-mono); }
+.axis :lang(ko) { font-family: var(--font-kr); line-height: var(--lh-kr); }
+
+/* Eyebrow / plate labels */
+.axis .eyebrow, .axis [data-role="eyebrow"] {
+  font: var(--t-eyebrow);
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.axis .plate {
+  font: var(--t-plate);
+  letter-spacing: var(--tr-wide);
+  color: var(--fg-3);
+}
+
+/* Hairline helper */
+.axis hr, .axis .rule {
+  border: 0;
+  border-top: var(--bw-1) solid var(--line-strong);
+  margin: var(--s-5) 0;
+}
+
+/* Focus — a hard double-rim, never a glow */
+.axis :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Selection — black block */
+.axis ::selection {
+  background: var(--ink-900);
+  color: var(--ink-000);
+}

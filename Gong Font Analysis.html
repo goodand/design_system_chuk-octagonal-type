@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>축 · "공" — 획 분석과 폰트 제안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #141414;
+    --ink-2: #4a4a4a;
+    --line: #e6e6e6;
+    --bg: #f4f3ef;
+    --accent: #d9531e;
+    --grid: #cfd2d8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: 'IBM Plex Sans KR', -apple-system, system-ui, sans-serif;
+    font-weight: 300; letter-spacing: -0.01em;
+  }
+  .page { max-width: 1280px; margin: 0 auto; padding: 72px 56px 140px; }
+
+  .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-2); font-weight: 500; }
+  h1 { font-weight: 700; font-size: 56px; line-height: 1.05; margin: 12px 0 20px;
+    letter-spacing: -0.03em; }
+  h1 .mark { color: var(--accent); }
+  h2 { font-weight: 700; font-size: 24px; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .lede { font-size: 17px; line-height: 1.6; color: var(--ink-2); max-width: 68ch; }
+  .lede b { color: var(--ink); font-weight: 500; }
+
+  section { margin-top: 88px; }
+  .section-head { display: flex; align-items: baseline; gap: 16px;
+    border-top: 1px solid var(--ink); padding-top: 22px; margin-bottom: 32px; }
+  .section-head .num { font-feature-settings: 'tnum'; font-weight: 700;
+    font-size: 13px; letter-spacing: 0.15em; }
+
+  /* Stroke analysis row */
+  .jamo-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .jamo-card { background: #fff; border: 1px solid var(--line); padding: 28px;
+    display: flex; flex-direction: column; gap: 18px; }
+  .jamo-card .label { display:flex; justify-content: space-between; align-items:baseline;}
+  .jamo-card .big { font-weight: 700; font-size: 36px; letter-spacing: -0.02em; }
+  .jamo-card .kind { font-size: 11px; letter-spacing: 0.2em; color: var(--ink-2);
+    text-transform: uppercase; }
+  .jamo-card svg { width: 100%; height: auto; background: #faf9f5; border: 1px solid var(--line);}
+  .jamo-card p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+  .jamo-card ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ink-2);
+    line-height: 1.7; }
+
+  /* Weight strategies */
+  .weights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .weight-card { background: #fff; border: 1px solid var(--line); padding: 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .weight-card .title-row { width: 100%; display: flex; justify-content: space-between;
+    align-items: baseline; }
+  .weight-card .title-row h3 { margin:0; font-size: 15px; font-weight: 700; letter-spacing:-0.01em; }
+  .weight-card .title-row .tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-2); border: 1px solid var(--line); padding: 3px 8px; }
+  .weight-card p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); text-align: center; }
+  .glyph-wrap { padding: 12px; background: #faf9f5; border: 1px solid var(--line); }
+
+  /* Specimen strip */
+  .specimen { background: var(--ink); color: #f4f3ef; padding: 64px 40px;
+    display: flex; align-items: center; justify-content: center; gap: 56px;
+    border: 1px solid var(--ink); }
+  .specimen .spec-col { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .specimen .spec-col .cap { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    opacity: 0.55; }
+
+  /* Rules */
+  .rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .rule { background: #fff; border: 1px solid var(--line); padding: 24px; }
+  .rule .n { font-size: 11px; letter-spacing: 0.2em; color: var(--accent); font-weight: 500; }
+  .rule h4 { margin: 8px 0 10px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .rule p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+
+  /* Controls */
+  .controls { display: flex; gap: 8px; align-items: center; margin-left: auto; }
+  .controls button { font-family: inherit; font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; background: transparent; border: 1px solid var(--ink);
+    color: var(--ink); padding: 8px 14px; cursor: pointer; }
+  .controls button.on { background: var(--ink); color: var(--bg); }
+  .controls button:hover { background: var(--ink); color: var(--bg); }
+
+  footer { margin-top: 120px; font-size: 12px; color: var(--ink-2);
+    border-top: 1px solid var(--line); padding-top: 24px; display: flex; justify-content: space-between;}
+
+  .callout { background: #fff; border: 1px solid var(--line); padding: 22px 26px;
+    font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+  .callout b { color: var(--ink); }
+
+  .kv { display: grid; grid-template-columns: 120px 1fr; gap: 6px 20px;
+    font-size: 13px; color: var(--ink-2); line-height: 1.7; margin-top: 8px; }
+  .kv dt { font-weight: 500; color: var(--ink); }
+  .kv dd { margin: 0; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="fonts/GongGlyph.jsx"></script>
+
+<script type="text/babel">
+const { useState } = React;
+
+// --- Small single-jamo previews --------------------------------------
+function JamoPreview({ kind, showGrid }) {
+  // Reuses the same octagon-grid visuals but isolates one jamo per frame.
+  const VB = 600;
+  const cx = VB/2, cy = VB/2;
+  const size = VB * 0.72;
+  const grid = showGrid && (
+    <g stroke="#cfd2d8" strokeWidth={1.4} fill="none" opacity={0.95}>
+      <path d={octagonPath(cx, cy, size, 0)} strokeDasharray="5 6"/>
+      {[0,45,90,135].map(d => {
+        const r = size/2;
+        const rad = d * Math.PI/180;
+        const dx = Math.cos(rad)*r, dy = Math.sin(rad)*r;
+        return <line key={d} x1={cx-dx} y1={cy-dy} x2={cx+dx} y2={cy+dy} strokeDasharray="3 5"/>;
+      })}
+      {/* vertex dots */}
+      {[0,45,90,135,180,225,270,315].map(d=>{
+        const r = size/2;
+        const s = r * (Math.SQRT2 - 1) / Math.SQRT2;
+        // compute vertex positions
+        return null;
+      })}
+    </g>
+  );
+
+  let shape;
+  if (kind === 'giyeok') {
+    const t = 70;
+    const left = cx - size/2, right = cx + size/2, top = cy - size/2, bottom = cy + size/2;
+    const ch = size * 0.22;
+    shape = (
+      <path fill="#141414" d={`
+        M ${left} ${top}
+        L ${right - ch} ${top}
+        L ${right} ${top + ch}
+        L ${right} ${bottom}
+        L ${right - t} ${bottom}
+        L ${right - t} ${top + ch + t * 0.4}
+        L ${right - ch - t*0.4} ${top + t}
+        L ${left} ${top + t}
+        Z
+      `}/>
+    );
+  } else if (kind === 'o') {
+    const stemW = 80, stemH = size * 0.55, barW = size, barH = 80;
+    const barY = cy + size/2 - barH;
+    shape = (
+      <g fill="#141414">
+        <rect x={cx - stemW/2} y={barY - stemH} width={stemW} height={stemH}/>
+        <rect x={cx - barW/2} y={barY} width={barW} height={barH}/>
+      </g>
+    );
+  } else {
+    const w = 110;
+    shape = (
+      <path fill="#141414" fillRule="evenodd"
+        d={octagonPath(cx, cy, size, 3) + ' ' + octagonPath(cx, cy, size - w*2, 2)} />
+    );
+  }
+
+  return (
+    <svg viewBox={`0 0 ${VB} ${VB}`}>
+      {grid}
+      {shape}
+    </svg>
+  );
+}
+
+function App() {
+  const [showGrid, setShowGrid] = useState(true);
+  return (
+    <div className="page">
+      <div className="eyebrow">축 · Chuk Brand System</div>
+      <h1>"<span className="mark">공</span>" — 팔각형 그리드 위의 획 단위 설계</h1>
+      <p className="lede">
+        <b>8방향 직선 + 팔각형</b>이라는 축(Chuk)의 기본 규칙을 그대로 이어받아 "공(ㄱ·ㅗ·ㅇ)"을
+        자모별로 분해하고, 다시 하나의 음절로 조립합니다. 모든 획은 <b>0° / 45° / 90° / 135°</b>
+        위에서만 그어지며, 곡선은 <b>정팔각형</b>으로 번역됩니다.
+      </p>
+
+      {/* RULES */}
+      <section>
+        <div className="section-head">
+          <div className="num">01 · RULES</div>
+          <h2 style={{margin:0}}>절대 규칙 (The 45° System)</h2>
+        </div>
+        <div className="rules">
+          <div className="rule"><div className="n">R1</div>
+            <h4>Octagonal Grid</h4>
+            <p>모든 자모는 팔각형 Bounding Box와 중심을 지나는 8방향 축 위에서만 그어진다.</p>
+          </div>
+          <div className="rule"><div className="n">R2</div>
+            <h4>곡선 금지</h4>
+            <p>허용 각도는 <b>0° · 45° · 90° · 135°</b>. 원은 정팔각형으로 번역한다.</p>
+          </div>
+          <div className="rule"><div className="n">R3</div>
+            <h4>축의 무게</h4>
+            <p>무게를 받는 획은 굵게, 받지 않는 획은 얇게. 건축적 위계로 안정감을 만든다.</p>
+          </div>
+          <div className="rule"><div className="n">R4</div>
+            <h4>옵티컬 챔퍼</h4>
+            <p>팔각형 꼭짓점에 <b>아주 미세한</b> 코너 라운드. 기계 도면처럼 보이지 않도록.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* STROKE ANALYSIS */}
+      <section>
+        <div className="section-head">
+          <div className="num">02 · STROKE ANALYSIS</div>
+          <h2 style={{margin:0}}>획 단위 시각적 패턴</h2>
+          <div className="controls">
+            <button className={showGrid?'on':''} onClick={()=>setShowGrid(v=>!v)}>
+              {showGrid?'Grid · ON':'Grid · OFF'}
+            </button>
+          </div>
+        </div>
+        <div className="jamo-row">
+
+          <div className="jamo-card">
+            <div className="label"><div className="big">ㄱ</div><div className="kind">Initial · 꺾임</div></div>
+            <JamoPreview kind="giyeok" showGrid={showGrid}/>
+            <p>상단 0° 가로획 + 우측 90° 세로획. 꺾임 지점은 팔각형 상단 우측 <b>45° chamfer</b>로 처리 —
+            완전한 직각 대신 45°로 잘린 모서리가 브랜드의 시그니처.</p>
+            <dl className="kv">
+              <dt>획 수</dt><dd>2 (가로, 세로)</dd>
+              <dt>허용 각도</dt><dd>0°, 45°, 90°</dd>
+              <dt>특징</dt><dd>방향의 시작 · 45° 꺾임</dd>
+            </dl>
+          </div>
+
+          <div className="jamo-card">
+            <div className="label"><div className="big">ㅗ</div><div className="kind">Medial · 축</div></div>
+            <JamoPreview kind="o" showGrid={showGrid}/>
+            <p>수직 기둥(90°)이 수평 받침(0°)을 <b>정중앙에서 관통</b>한다. '축' 브랜드 아이덴티티의
+            핵심이 그대로 드러나는 자모 — 글자 자체가 로고다.</p>
+            <dl className="kv">
+              <dt>획 수</dt><dd>2 (기둥, 받침)</dd>
+              <dt>허용 각도</dt><dd>0°, 90°</dd>
+              <dt>특징</dt><dd>중심축 · 대칭 · 관통</dd>
+            </dl>
+          </div>
+
+          <div className="jamo-card">
+            <div className="label"><div className="big">ㅇ</div><div className="kind">Final · 팔각형</div></div>
+            <JamoPreview kind="ieung" showGrid={showGrid}/>
+            <p>원을 <b>정팔각형</b>으로 치환. 4개 직교 변 + 4개 대각 변 = 8변이 모두 같은 길이. 내부는
+            비어있어 <b>"공(空)"</b> 메타포와 직접 연결된다.</p>
+            <dl className="kv">
+              <dt>획 수</dt><dd>1 (닫힌 팔각형)</dd>
+              <dt>허용 각도</dt><dd>0°, 45°, 90°, 135°</dd>
+              <dt>특징</dt><dd>무게 중심 · 공(空)</dd>
+            </dl>
+          </div>
+
+        </div>
+      </section>
+
+      {/* WEIGHT STRATEGIES */}
+      <section>
+        <div className="section-head">
+          <div className="num">03 · WEIGHT STRATEGIES</div>
+          <h2 style={{margin:0}}>"공" — 세 가지 획 굵기 전략</h2>
+          <div className="controls">
+            <button className={showGrid?'on':''} onClick={()=>setShowGrid(v=>!v)}>
+              {showGrid?'Grid · ON':'Grid · OFF'}
+            </button>
+          </div>
+        </div>
+
+        <div className="weights">
+          <div className="weight-card">
+            <div className="title-row"><h3>Strategy 1 · 안정감</h3><div className="tag">Stable</div></div>
+            <div className="glyph-wrap"><GongGlyph size={360} strategy="stable" showGrid={showGrid}/></div>
+            <p>하단 ㅇ을 가장 두껍게 처리 — 무거운 공 위에 구조가 얹힌 <b>건축적 안정감</b>.</p>
+          </div>
+
+          <div className="weight-card">
+            <div className="title-row"><h3>Strategy 2 · 에너지</h3><div className="tag">Energy</div></div>
+            <div className="glyph-wrap"><GongGlyph size={360} strategy="energy" showGrid={showGrid}/></div>
+            <p>ㅗ의 수직 기둥을 가장 두껍게 — 상단에서 시작된 무게가 하단으로 <b>꽂히는 역동성</b>.</p>
+          </div>
+
+          <div className="weight-card">
+            <div className="title-row"><h3>Strategy 3 · 균일</h3><div className="tag">Uniform</div></div>
+            <div className="glyph-wrap"><GongGlyph size={360} strategy="uniform" showGrid={showGrid}/></div>
+            <p>모든 획이 같은 굵기 — <b>시스템 폰트 기준선</b>. 본문 레벨에서 중립적으로 작동.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* SPECIMEN */}
+      <section>
+        <div className="section-head">
+          <div className="num">04 · SPECIMEN</div>
+          <h2 style={{margin:0}}>세 가중치 — 나란히</h2>
+        </div>
+        <div className="specimen">
+          <div className="spec-col">
+            <GongGlyph size={200} strategy="stable" color="#f4f3ef"/>
+            <div className="cap">Stable</div>
+          </div>
+          <div className="spec-col">
+            <GongGlyph size={200} strategy="energy" color="#f4f3ef"/>
+            <div className="cap">Energy</div>
+          </div>
+          <div className="spec-col">
+            <GongGlyph size={200} strategy="uniform" color="#f4f3ef"/>
+            <div className="cap">Uniform</div>
+          </div>
+        </div>
+      </section>
+
+      {/* NOTES */}
+      <section>
+        <div className="section-head">
+          <div className="num">05 · NEXT</div>
+          <h2 style={{margin:0}}>다음 단계</h2>
+        </div>
+        <div className="callout">
+          지금은 "공" 한 글자의 획 시스템만 완성된 상태입니다. 여기서 확장 가능한 것들 —
+          <b> (1)</b> 같은 규칙으로 "축" 글자와의 2-글자 로크업(lockup) 설계,
+          <b> (2)</b> ㅂ/ㅁ/ㅍ 같이 내부에 사각이 있는 자모의 팔각형 번역,
+          <b> (3)</b> 복잡한 받침(ㄺ, ㄻ)의 팔각형 그리드 매핑,
+          <b> (4)</b> 숫자·라틴 알파벳의 동일 규칙 적용. 어느 방향으로 갈지 알려주시면 이어서 설계하겠습니다.
+        </div>
+      </section>
+
+      <footer>
+        <div>축 · Chuk Design System · v0.1</div>
+        <div>Octagonal Master Grid · 45° Rule · Axis Weight</div>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

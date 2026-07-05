@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <title>축 (Chuk) Logo</title>
+  
+  <rect width="600" height="600" fill="#f5f2e8"></rect>
+  
+  <g stroke="#141414" stroke-width="3" stroke-linecap="butt">
+    <line x1="72" y1="300" x2="528" y2="300"></line>
+    <line x1="138.79" y1="138.79" x2="461.21" y2="461.21"></line>
+    <line x1="300" y1="72" x2="300" y2="528"></line>
+    <line x1="461.21" y1="138.79" x2="138.79" y2="461.21"></line>
+  </g>
+  
+  <rect x="275" y="72" width="50" height="456" fill="#141414"></rect>
+  
+  <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"></path>
+</svg>

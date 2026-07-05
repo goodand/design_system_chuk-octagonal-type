@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>축 × Pretendard — Harmony Test</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Pretendard, -apple-system, system-ui, sans-serif;
+    background: #f5f2e8;
+    color: #141414;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
+  }
+  ::selection { background: #d9531e; color: #f5f2e8; }
+  .mono { font-family: ui-monospace, 'SF Mono', Menlo, monospace; }
+  /* TOKENS — unified with DS v0.5 */
+  :root {
+    --ink: #141414;
+    --ink-2: #4a4a4a;
+    --ink-3: #8a8a8a;
+    --line: #e6e1d6;
+    --bg: #f5f2e8;
+    --paper: #faf9f5;
+    --accent: #d9531e;
+  }
+  .page { max-width: 1280px; margin: 0 auto; padding: 56px 56px 140px; }
+  .masthead { display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--ink); padding-bottom: 18px; }
+  .brand { font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+  .brand .sep { color: var(--ink-3); padding: 0 10px; }
+  .meta { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-2); }
+  section { margin-top: 96px; }
+  .sh { display: flex; align-items: baseline; gap: 18px; border-top: 1px solid var(--ink); padding-top: 22px; margin-bottom: 36px; }
+  .sh .num { font-family: ui-monospace, monospace; font-size: 12px; letter-spacing: 0.1em; }
+  .sh h2 { margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .sh .cap { margin-left: auto; font-size: 12px; color: var(--ink-2); letter-spacing: 0.08em; }
+  .note { margin-top: 20px; font-size: 12px; color: var(--ink-3); line-height: 1.6; max-width: 80ch; }
+  .note b { color: var(--ink); font-weight: 500; }
+
+  /* hero */
+  .hero { padding: 64px 0 32px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
+  .hero .eyebrow { font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 600; color: var(--accent); margin-bottom: 18px; }
+  .hero h1 { font-weight: 700; font-size: 80px; line-height: 0.98; margin: 0 0 24px; letter-spacing: -0.035em; text-wrap: balance; }
+  .hero h1 .mark { color: var(--accent); }
+  .hero .lede { font-size: 17px; line-height: 1.65; color: var(--ink-2); max-width: 56ch; }
+  .hero-mark { background: var(--paper); border: 1px solid var(--line); aspect-ratio: 1/1; display: grid; place-items: center; padding: 32px; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .stats .k { font-size: 56px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+  .stats .l { font-size: 13px; font-weight: 600; margin-top: 12px; }
+  .stats .s { font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+
+  /* origin — 두 보고서 인용 */
+  .origin { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink); background: #fff; }
+  .origin .col { padding: 32px; border-right: 1px solid var(--line); }
+  .origin .col:last-child { border-right: 0; background: var(--paper); }
+  .origin .tag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  .origin h3 { margin: 8px 0 16px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+  .origin .verdict { font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: 0.06em;
+    padding: 8px 12px; display: inline-block; margin-bottom: 16px; }
+  .origin .v-warn { background: #f7e9c8; color: #6b4f10; }
+  .origin .v-pass { background: var(--ink); color: var(--accent); }
+  .origin ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+  .origin ul li { margin-bottom: 6px; }
+  .origin ul li b { color: var(--ink); font-weight: 500; }
+
+  /* primitive comparison */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--ink); background: #fff; }
+  .compare .col { padding: 36px; border-right: 1px solid var(--line); }
+  .compare .col:last-child { border-right: 0; }
+  .compare .tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; }
+  .compare .col.pre .tag { color: var(--ink-3); }
+  .compare .col.chuk .tag { color: var(--accent); }
+  .compare .row { display: flex; gap: 24px; align-items: flex-end; margin: 24px 0 16px; }
+  .compare .row .glyph { font-family: Pretendard; font-size: 200px; line-height: 0.85; font-weight: 500; }
+  .compare .desc { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+
+  /* heatmap */
+  .heat { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); margin-top: 24px; border: 1px solid var(--line); }
+  .heat .cell { background: #fff; padding: 18px; min-height: 96px; }
+  .heat .lvl { font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .heat .lvl.h { color: var(--accent); }
+  .heat .lvl.m { color: #b8860b; }
+  .heat .lvl.l { color: var(--ink-3); }
+  .heat .lbl { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .heat .det { font-family: ui-monospace, monospace; font-size: 11px; color: var(--ink-3); }
+
+  /* audit table */
+  .at { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--ink); }
+  .at th, .at td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--line); font-size: 12px; vertical-align: top; }
+  .at th { background: var(--paper); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 10px; color: var(--ink-2); }
+  .at td.num { font-family: ui-monospace, monospace; color: var(--ink-2); white-space: nowrap; }
+  .at td.pass::before { content: '✓ '; color: #2a7a3a; font-weight: 700; }
+  .at tr:last-child td { border-bottom: 0; }
+
+  /* dodont */
+  .dodont { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--ink); background: #fff; }
+  .dodont .dd { padding: 22px 20px 24px; border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .dodont .dd:last-child { border-right: 0; }
+  .dodont .badge { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; padding: 4px 8px; align-self: flex-start; }
+  .dodont .do .badge { background: var(--ink); color: var(--bg); }
+  .dodont .dont .badge { background: var(--accent); color: #fff; }
+  .dodont .stage { aspect-ratio: 4/3; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; padding: 12px; overflow: hidden; }
+  .dodont .label { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+  .dodont .desc { font-size: 11.5px; line-height: 1.55; color: var(--ink-2); }
+  .dodont .nums { font-family: ui-monospace, monospace; font-size: 10px; color: var(--ink-3); border-top: 1px dashed var(--line); padding-top: 6px; }
+
+  /* lockups */
+  .lockups { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .lockups .lk { background: #fff; border: 1px solid var(--line); padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 18px; min-height: 200px; justify-content: center; }
+  .lockups .lk .row { display: flex; align-items: center; }
+  .lockups .lk .word { font-family: Pretendard; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+  .lockups .lk .lbl { font-size: 11px; color: var(--ink-3); letter-spacing: 0.18em; text-transform: uppercase; }
+
+  /* patterns */
+  .patterns { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .pat { background: #fff; border: 1px solid var(--line); padding: 36px; min-height: 280px; display: flex; flex-direction: column; gap: 14px; }
+  .pat .ptag { font-size: 10px; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; }
+  .pat h4 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .pat p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--ink-2); }
+  .pat .stage { background: var(--paper); border: 1px solid var(--line); padding: 24px; flex: 1; display: grid; place-items: center; }
+  .pat.dark { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .pat.dark h4 { color: var(--bg); }
+  .pat.dark p { color: rgba(245,242,232,0.7); }
+  .pat.dark .stage { background: #202020; border-color: rgba(255,255,255,0.1); }
+
+  footer { margin-top: 120px; border-top: 1px solid var(--ink); padding-top: 22px; display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+  footer b { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <div class="brand">축 <span class="sep">/</span> CHUK × PRETENDARD</div>
+    <div class="meta">Harmony Test · v0.2 · 2026</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Audit-driven Harmony Test</div>
+      <h1>Pretendard로 말하고,<br/><span class="mark">축</span>으로 외친다.</h1>
+      <p class="lede">
+        본 페이지는 <b>두 개의 판독 보고서</b> — PNG-only 단계 (FINAL: WARN / COMPATIBLE_WITH_RULES)와 SVG 원본 확보 단계 (FINAL: PASS / COMPATIBLE) — 의 측정값을 그대로 가져와, <b>exports/chuk-logo.svg</b> 와 <b>Pretendard</b> 본문이 같은 평면에서 만났을 때의 충돌을 정량화하고 회피 규칙으로 변환한다.
+      </p>
+    </div>
+    <div class="hero-mark">
+      <!-- 인라인 chuk logo (정합) -->
+      <svg viewBox="0 0 600 600" width="100%" height="100%">
+        <g stroke="#141414" stroke-width="3"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+        <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+        <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div><div class="k">95%</div><div class="l">Pretendard 비중</div><div class="s">Body · UI · Labels</div></div>
+    <div><div class="k">5%</div><div class="l">축 비중</div><div class="s">Logo · Vertex · Anchor</div></div>
+    <div><div class="k">8/8</div><div class="l">호환성 항목 PASS</div><div class="s">Audit 보고서 2 기준</div></div>
+    <div><div class="k">0.16</div><div class="l">스케일 팩터</div><div class="s">viewBox 600 → 96px</div></div>
+  </div>
+
+  <!-- §00 두 보고서 -->
+  <section>
+    <div class="sh"><div class="num">00</div><h2>두 개의 판독 보고서</h2><div class="cap">PNG-only → SVG 확보, 결론이 어떻게 바뀌었나</div></div>
+    <div class="origin">
+      <div class="col">
+        <div class="tag">Report 1 · PNG only</div>
+        <h3>SVG 미업로드 상태</h3>
+        <div class="verdict v-warn">FINAL: WARN / COMPATIBLE_WITH_RULES</div>
+        <ul>
+          <li><b>좌표·색상·정렬</b>: PNG 기준 일치 ✓</li>
+          <li><b>SVG 메타·DOM·Z-order</b>: 검증 불가 — 원본 부재</li>
+          <li><b>수직 광선</b>: 막대와 동일색으로 중첩, 독립 식별 불가</li>
+          <li><b>45° vs Pretendard ㅅ</b>: 추정 51–53° → 차이 6–8°, <b>충돌 위험 ✗</b></li>
+          <li>결론: <b>회피 규칙 필요</b></li>
+        </ul>
+      </div>
+      <div class="col">
+        <div class="tag">Report 2 · SVG 확보 후</div>
+        <h3>chuk-logo.svg 776 bytes 판독 완료</h3>
+        <div class="verdict v-pass">FINAL: PASS / COMPATIBLE</div>
+        <ul>
+          <li>viewBox <b>0 0 600 600</b>, 5개 가시 요소 모두 정확</li>
+          <li>정팔각형 정칙성: 변 길이 <b>15.30/15.32 교대</b>, 편차 0.016</li>
+          <li>중심 (300.00, 300.00), 외접 R=20.00, 정점 22.49°/67.51°/112.49°/157.51°</li>
+          <li>Pretendard ㅅ/ㅈ 실측 <b>65–70°</b> 재반영 → 차이 20–25°, <b>분리 ✓</b></li>
+          <li>결론: <b>8/8 통과</b>, 단 #141414 hex 충돌은 컨테이너 분리 조건부</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      두 보고서의 가장 큰 차이: <b>ㅅ/ㅈ 사선 각도</b>가 51–53° (추정) → 65–70° (실측)으로 재측정되며, 광선 45°와의 충돌 위험이 <b>WARN → PASS</b>로 해소됨. 단 모든 회피 규칙은 그대로 유지.
+    </div>
+  </section>
+
+  <!-- §01 Primitive Comparison -->
+  <section>
+    <div class="sh"><div class="num">01</div><h2>Primitive Comparison</h2><div class="cap">두 시스템의 시각 DNA — 같은 크기, 다른 비율</div></div>
+    <div class="compare">
+      <div class="col pre">
+        <div class="tag">Pretendard · 가로 타원 1.14:1</div>
+        <div class="row">
+          <div class="glyph">ㅇ</div>
+          <div class="glyph">ㅁ</div>
+          <div class="glyph">ㅅ</div>
+        </div>
+        <div class="desc">곡선 ㅇ · 직각 종단 · <b>실측 사선 65–70°</b> · monolinear stem ≈ 6.5px @96</div>
+      </div>
+      <div class="col chuk">
+        <div class="tag">축 · 8방향 직선 + 정팔각</div>
+        <div class="row" style="gap:20px">
+          <!-- 정팔각형 ring -->
+          <svg width="180" height="180" viewBox="0 0 16 16"><path fill="#141414" fill-rule="evenodd" d="M 5 0 L 11 0 L 16 5 L 16 11 L 11 16 L 5 16 L 0 11 L 0 5 Z M 6 3 L 10 3 L 13 6 L 13 10 L 10 13 L 6 13 L 3 10 L 3 6 Z"/></svg>
+          <!-- chamfered square -->
+          <svg width="180" height="180" viewBox="0 0 16 16"><path fill="#141414" fill-rule="evenodd" d="M 2 1 L 14 1 L 15 2 L 15 14 L 14 15 L 2 15 L 1 14 L 1 2 Z M 4 3 L 12 3 L 13 4 L 13 12 L 12 13 L 4 13 L 3 12 L 3 4 Z"/></svg>
+          <!-- chuk symbol mini -->
+          <svg width="180" height="180" viewBox="0 0 600 600">
+            <g stroke="#141414" stroke-width="6"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+            <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+            <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+          </svg>
+        </div>
+        <div class="desc">정팔각 외접 1:1 · 45° 챔퍼 · <b>광선 45°</b> · stroke 0.48px @96 (stem의 1/13 — hairline)</div>
+      </div>
+    </div>
+
+    <div class="heat">
+      <div class="cell"><div class="lvl h">● HIGH</div><div class="lbl">ㅇ 형태</div><div class="det">타원 vs 정팔각 → 9.38× 위계로 분리</div></div>
+      <div class="cell"><div class="lvl h">● HIGH</div><div class="lbl">색상 hex</div><div class="det">#141414 ≡ #141414 → 컨테이너 분리</div></div>
+      <div class="cell"><div class="lvl m">● MED</div><div class="lbl">대각선 각도</div><div class="det">45° vs 65–70° (Δ20–25°)</div></div>
+      <div class="cell"><div class="lvl m">● MED</div><div class="lbl">종단 / 꺾임</div><div class="det">직각 cut vs 45° 챔퍼</div></div>
+      <div class="cell"><div class="lvl l">● LOW</div><div class="lbl">획 굵기</div><div class="det">0.48 / 6.5 = 0.074</div></div>
+      <div class="cell"><div class="lvl l">● LOW</div><div class="lbl">막대 비율</div><div class="det">8 / 72.96 = 0.110</div></div>
+      <div class="cell"><div class="lvl l">● LOW</div><div class="lbl">컬럼 점유</div><div class="det">8 ≤ 180 (≤25% of 720)</div></div>
+      <div class="cell"><div class="lvl l">● LOW</div><div class="lbl">대비비 (WCAG)</div><div class="det">16.45 · 4.57 · 3.60</div></div>
+    </div>
+  </section>
+
+  <!-- §02 Audit Table -->
+  <section>
+    <div class="sh"><div class="num">02</div><h2>Pretendard 호환성 검증 — 8 항목</h2><div class="cap">Report 2 측정값 직접 인용</div></div>
+    <table class="at">
+      <thead><tr><th style="width:38%">항목</th><th style="width:28%">측정값</th><th style="width:10%">판정</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>ㅇ vs 팔각형 외접 지름 (위계)</td><td class="num">60 / 6.4 = 9.38×</td><td class="pass">PASS</td><td>닫힌 원형끼리 충돌 안 함</td></tr>
+        <tr><td>곡률 차이 (곡선 vs 직선 8변)</td><td class="num">circle vs 8-gon</td><td class="pass">PASS</td><td>시각언어 분리</td></tr>
+        <tr><td>광선 stroke vs 본문 stem</td><td class="num">0.48 / 6.5 = 0.074</td><td class="pass">PASS</td><td>hairline 성격</td></tr>
+        <tr><td>막대 width / cap height</td><td class="num">8 / 72.96 = 0.110</td><td class="pass">PASS</td><td>한 글자 stem으로 오인 안 됨</td></tr>
+        <tr><td>ㅁ vs 팔각형 (모서리 반경)</td><td class="num">round-rect vs sharp octagon</td><td class="pass">PASS</td><td>코너 처리 차이</td></tr>
+        <tr><td>광선 45° vs ㅅ/ㅈ 사선 65–70°</td><td class="num">Δ 20–25°</td><td class="pass">PASS</td><td>인접 8px 이내 금지</td></tr>
+        <tr><td>본문 컬럼 720px 대비 막대폭</td><td class="num">8 ≤ 180 (≤25%)</td><td class="pass">PASS</td><td>컬럼으로 오인 안 됨</td></tr>
+        <tr><td>본문 검정 vs 막대 검정</td><td class="num">#141414 ≡ #141414</td><td class="pass">PASS *</td><td>* 컨테이너 분리 조건부</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      대비비: 검정 vs 크림 <b>16.45:1</b> · 오렌지 vs 검정 <b>4.57:1</b> · 오렌지 vs 크림 <b>3.60:1</b>. 오렌지는 텍스트 비권장, vertex mark 전용.
+    </div>
+  </section>
+
+  <!-- §03 DO -->
+  <section>
+    <div class="sh"><div class="num">03</div><h2>DO · 4 규칙</h2><div class="cap">측정값 기반 운영 디테일</div></div>
+    <div class="dodont">
+      <div class="dd do">
+        <div class="badge">DO · 01</div>
+        <div class="stage">
+          <div style="display:flex;align-items:center;gap:14px">
+            <svg width="56" height="56" viewBox="0 0 600 600">
+              <g stroke="#141414" stroke-width="14"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+              <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+              <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+            </svg>
+            <div style="font-family:Pretendard;font-size:26px;font-weight:700;letter-spacing:-0.02em">축</div>
+          </div>
+        </div>
+        <div class="label">컨테이너 분리</div>
+        <div class="desc">로고와 본문이 같은 #141414일 때, 둘은 다른 박스/배경 영역에 분리한다. 겹치면 식별 불가.</div>
+        <div class="nums">min gap = symbol-width × 0.18</div>
+      </div>
+      <div class="dd do">
+        <div class="badge">DO · 02</div>
+        <div class="stage">
+          <svg viewBox="0 0 200 100" width="100%" preserveAspectRatio="xMidYMid meet">
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#141414" stroke-width="0.48"/>
+            <text x="100" y="58" font-size="22" font-weight="700" fill="#141414" font-family="Pretendard">텍스트</text>
+            <text x="20" y="82" font-size="7" fill="#8a8a8a" font-family="monospace">0.48px hairline</text>
+            <text x="100" y="82" font-size="7" fill="#8a8a8a" font-family="monospace">stem ≈ 6.5px</text>
+          </svg>
+        </div>
+        <div class="label">Hairline 두께</div>
+        <div class="desc">96px 기준 광선 stroke 0.48px = 본문 stem의 1/13. hairline 성격을 유지한다.</div>
+        <div class="nums">stroke ≤ stem × 1/8</div>
+      </div>
+      <div class="dd do">
+        <div class="badge">DO · 03</div>
+        <div class="stage">
+          <div style="display:flex;align-items:baseline;gap:18px">
+            <div style="font-family:Pretendard;font-size:84px;font-weight:700;letter-spacing:-0.03em;line-height:1">ㅇ</div>
+            <svg width="22" height="22" viewBox="0 0 40 40">
+              <path d="M 30.39,22.65 L 22.65,30.39 L 17.35,30.39 L 9.61,22.65 L 9.61,17.35 L 17.35,9.61 L 22.65,9.61 L 30.39,17.35 Z" fill="#d9531e"/>
+            </svg>
+          </div>
+        </div>
+        <div class="label">크기 위계 ≥ 6×</div>
+        <div class="desc">팔각형은 본문 ㅇ 대비 1/9 이하로 유지. vertex mark 성격을 보존한다.</div>
+        <div class="nums">octagon ≤ ㅇ × 0.16</div>
+      </div>
+      <div class="dd do">
+        <div class="badge">DO · 04</div>
+        <div class="stage">
+          <svg viewBox="0 0 200 100" width="100%" preserveAspectRatio="xMidYMid meet">
+            <rect x="96" y="15" width="8" height="70" fill="#141414"/>
+            <line x1="100" y1="10" x2="100" y2="90" stroke="#d9531e" stroke-width="0.5" stroke-dasharray="2 2"/>
+            <text x="100" y="98" font-size="7" text-anchor="middle" fill="#8a8a8a" font-family="monospace">x≡300 · w=50</text>
+          </svg>
+        </div>
+        <div class="label">수직축 대칭 보존</div>
+        <div class="desc">막대는 viewBox 중심 x=300, w=50 구조 유지. 좌우 비대칭 락업 금지.</div>
+        <div class="nums">center.x ≡ 300 ± 0.1</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §04 DON'T -->
+  <section>
+    <div class="sh"><div class="num">04</div><h2>DON'T · 4 규칙</h2><div class="cap">충돌이 일어나는 자리</div></div>
+    <div class="dodont">
+      <div class="dd dont">
+        <div class="badge">DON'T · 01</div>
+        <div class="stage" style="position:relative">
+          <div style="font-family:Pretendard;font-size:30px;font-weight:700;color:#141414">본문 위에 축</div>
+          <div style="position:absolute;left:46%;top:12%;bottom:12%;width:6px;background:#141414"></div>
+        </div>
+        <div class="label">#141414 겹침 금지</div>
+        <div class="desc">본문 텍스트 위에 같은 검정 막대를 올리지 않는다. 글자와 막대가 구분되지 않는다.</div>
+        <div class="nums">overlap z-conflict</div>
+      </div>
+      <div class="dd dont">
+        <div class="badge">DON'T · 02</div>
+        <div class="stage">
+          <div style="display:flex;align-items:center;gap:2px">
+            <div style="font-family:Pretendard;font-size:64px;font-weight:700;line-height:1">ㅅ</div>
+            <svg width="42" height="42" viewBox="0 0 60 60">
+              <line x1="8" y1="8" x2="52" y2="52" stroke="#141414" stroke-width="1.2"/>
+              <line x1="52" y1="8" x2="8" y2="52" stroke="#141414" stroke-width="1.2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="label">ㅅ/ㅈ 인접 배치 금지</div>
+        <div class="desc">광선 45° vs Pretendard ㅅ/ㅈ 사선 65–70°. 8px 이내에서는 같은 사선 계열로 읽힌다.</div>
+        <div class="nums">min gap ≥ 8px @96</div>
+      </div>
+      <div class="dd dont">
+        <div class="badge">DON'T · 03</div>
+        <div class="stage">
+          <div style="display:flex;align-items:baseline;gap:6px">
+            <div style="font-family:Pretendard;font-size:64px;font-weight:700;line-height:1">ㅇ</div>
+            <svg width="56" height="56" viewBox="0 0 60 60">
+              <path d="M 55.4,22.96 L 45.45,42.69 L 34.55,49.4 L 22.96,49.4 L 5.6,37.04 L 5.6,22.96 L 14.55,9.31 L 25.45,2.6 L 37.04,5.6 L 55.4,22.96 Z" fill="none" stroke="#d9531e" stroke-width="1.5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="label">ㅇ 크기 팔각형 금지</div>
+        <div class="desc">팔각형을 Pretendard ㅇ의 0.7×–1.3× 범위로 키우지 않는다. 닫힌 원형 도형끼리 충돌.</div>
+        <div class="nums">octagon ∉ [0.7×, 1.3×] of ㅇ</div>
+      </div>
+      <div class="dd dont">
+        <div class="badge">DON'T · 04</div>
+        <div class="stage">
+          <svg viewBox="0 0 200 100" width="100%" preserveAspectRatio="xMidYMid meet">
+            <line x1="20" y1="50" x2="80" y2="50" stroke="#141414" stroke-width="3"/>
+            <text x="100" y="58" font-size="18" font-weight="700" fill="#141414" font-family="Pretendard">본문</text>
+            <text x="20" y="82" font-size="8" fill="#d9531e" font-family="monospace">3px ✗</text>
+          </svg>
+        </div>
+        <div class="label">광선 굵기 초과 금지</div>
+        <div class="desc">광선 stroke를 본문 stem의 1/8 이상으로 키우지 않는다. hairline 위계가 깨진다.</div>
+        <div class="nums">stroke > stem/8 → reject</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §05 Lockup -->
+  <section>
+    <div class="sh"><div class="num">05</div><h2>Reference Lockup</h2><div class="cap">3 sizes · symbol → wordmark</div></div>
+    <div class="lockups">
+      <div class="lk">
+        <div class="row" style="gap:10px">
+          <svg width="32" height="32" viewBox="0 0 600 600">
+            <g stroke="#141414" stroke-width="20"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+            <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+            <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+          </svg>
+          <div class="word" style="font-size:20px">축 · Chuk</div>
+        </div>
+        <div class="lbl">Small · 32 / 20</div>
+      </div>
+      <div class="lk">
+        <div class="row" style="gap:14px">
+          <svg width="56" height="56" viewBox="0 0 600 600">
+            <g stroke="#141414" stroke-width="14"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+            <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+            <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+          </svg>
+          <div class="word" style="font-size:36px">축 · Chuk</div>
+        </div>
+        <div class="lbl">Medium · 56 / 36</div>
+      </div>
+      <div class="lk">
+        <div class="row" style="gap:22px">
+          <svg width="120" height="120" viewBox="0 0 600 600">
+            <g stroke="#141414" stroke-width="6"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+            <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+            <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+          </svg>
+          <div class="word" style="font-size:72px">축</div>
+        </div>
+        <div class="lbl">Large · 120 / 72</div>
+      </div>
+    </div>
+    <div class="note">
+      Symbol height : Word cap height = 1.0 : 0.6. Gap = symbol-width × 0.18. Word는 Pretendard 700, letter-spacing -0.03em.
+    </div>
+  </section>
+
+  <!-- §06 Patterns -->
+  <section>
+    <div class="sh"><div class="num">06</div><h2>4 Visual Patterns</h2><div class="cap">규칙이 살아있는 4가지 자리</div></div>
+    <div class="patterns">
+      <div class="pat">
+        <div class="ptag">Pattern A · Lockup</div>
+        <h4>로고 락업</h4>
+        <div class="stage">
+          <div style="display:flex;align-items:center;gap:18px">
+            <svg width="64" height="64" viewBox="0 0 600 600">
+              <g stroke="#141414" stroke-width="12"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+              <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+              <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+            </svg>
+            <div style="font-family:Pretendard;font-size:42px;font-weight:700;letter-spacing:-0.03em">축 · Chuk</div>
+          </div>
+        </div>
+        <p>심볼 + 워드마크. 컨테이너 분리, 같은 평면 충돌 없음. DO 01·04 적용.</p>
+      </div>
+      <div class="pat">
+        <div class="ptag">Pattern B · Section Anchor</div>
+        <h4>섹션 앵커</h4>
+        <div class="stage" style="align-items:start;text-align:left;flex-direction:column;gap:16px;display:flex;justify-content:flex-start">
+          <svg width="80" height="80" viewBox="0 0 600 600">
+            <g stroke="#141414" stroke-width="10"><line x1="72" y1="300" x2="528" y2="300"/><line x1="138.79" y1="138.79" x2="461.21" y2="461.21"/><line x1="300" y1="72" x2="300" y2="528"/><line x1="461.21" y1="138.79" x2="138.79" y2="461.21"/></g>
+            <rect x="275" y="72" width="50" height="456" fill="#141414"/>
+            <path d="M 318.48,307.65 L 307.65,318.48 L 292.35,318.48 L 281.52,307.65 L 281.52,292.35 L 292.35,281.52 L 307.65,281.52 L 318.48,292.35 Z" fill="#d9531e"/>
+          </svg>
+          <div style="font-family:Pretendard;font-size:13px;color:#d9531e;letter-spacing:0.18em;text-transform:uppercase;font-weight:700">공지</div>
+          <div style="font-family:Pretendard;font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1.2">디자인 시스템 v0.5 발표</div>
+        </div>
+        <p>로고는 디스플레이 사이즈, 본문은 Pretendard로 흐름. 크기 위계로 분리. DO 03 적용.</p>
+      </div>
+      <div class="pat dark">
+        <div class="ptag">Pattern C · Display</div>
+        <h4>디스플레이 헤드라인</h4>
+        <div class="stage">
+          <div style="font-family:Pretendard;font-size:42px;font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#f5f2e8;text-align:center">
+            모든 디자인은<br/><span style="color:#d9531e">중심</span>이 필요하다.
+          </div>
+        </div>
+        <p>컬러 코딩만으로 "축의 정신" 환기. 인라인 심볼 삽입 없음. DON'T 02 회피.</p>
+      </div>
+      <div class="pat">
+        <div class="ptag">Pattern D · Vertex Mark</div>
+        <h4>vertex mark</h4>
+        <div class="stage">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font-family:Pretendard;font-size:64px;font-weight:600;letter-spacing:-0.03em">2026</div>
+            <svg width="14" height="14" viewBox="0 0 40 40">
+              <path d="M 30.39,22.65 L 22.65,30.39 L 17.35,30.39 L 9.61,22.65 L 9.61,17.35 L 17.35,9.61 L 22.65,9.61 L 30.39,17.35 Z" fill="#d9531e"/>
+            </svg>
+          </div>
+        </div>
+        <p>팔각형을 punctuation 크기로. 본문 ㅇ 대비 1/9. DO 03 적용.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>축 × Pretendard · <b>Harmony Test v0.2</b></span>
+    <span>FINAL: PASS / COMPATIBLE · 8/8</span>
+    <span>© Chuk 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>

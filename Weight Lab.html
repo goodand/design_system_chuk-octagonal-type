@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<title>Weight Lab · 3 Approaches</title>
+<style>
+  @font-face {
+    font-family: 'IBM Plex Sans KR';
+    src: url('fonts/IBMPlexSansKR-Regular.ttf') format('truetype');
+    font-weight: 300 700; font-display: swap;
+  }
+  :root { --ink:#141414; --ink-2:#4a4a4a; --ink-3:#7a7a7a; --paper:#faf9f5; --bg:#f4f3ef; --line:#e6e1d6; --accent:#d9531e; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans KR', system-ui, sans-serif; }
+  .lab { max-width: 1400px; margin: 0 auto; padding: 40px 32px 80px; }
+  header h1 { font-size: 28px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header .meta { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-3); letter-spacing: 0.02em; }
+
+  .approach { margin-top: 40px; background: var(--paper); border: 1px solid var(--line); border-radius: 2px; padding: 24px 24px 20px; }
+  .ah { display: flex; align-items: baseline; gap: 14px; margin-bottom: 4px; }
+  .ah .badge { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--ink); color: var(--paper); font-weight: 700; font-size: 13px; border-radius: 2px; }
+  .ah h2 { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  .ah .sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em; text-transform: uppercase; }
+  .desc { font-size: 13px; color: var(--ink-2); line-height: 1.55; margin: 6px 0 20px; max-width: 80ch; }
+
+  .wrow { display: grid; gap: 10px; margin-top: 14px; }
+  .wrow.w3 { grid-template-columns: repeat(3, 1fr); }
+  .wrow.w4 { grid-template-columns: repeat(4, 1fr); }
+
+  .wcol { background: #fff; border: 1px solid var(--line); }
+  .wch { padding: 10px 12px 8px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .wct { font-size: 12px; font-weight: 700; letter-spacing: 0.04em; }
+  .wcs { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-3); }
+  .glyphs { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .gc { border-right: 1px solid var(--line); }
+  .gc:last-child { border-right: 0; }
+  .gc svg { display: block; width: 100%; background: var(--paper); }
+  .gc .lbl { padding: 4px 8px; font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--ink-3); text-align: center; letter-spacing: 0.1em; }
+
+  .verdict { margin-top: 16px; padding: 12px 14px; border-left: 3px solid var(--accent); background: #fff; font-size: 12px; color: var(--ink-2); line-height: 1.6; }
+  .verdict b { color: var(--ink); }
+
+  footer { margin-top: 48px; padding: 16px; background: var(--ink); color: var(--paper); font-size: 12px; line-height: 1.6; border-radius: 2px; }
+  footer b { color: var(--accent); }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="weight-lab.jsx"></script>
+</body>
+</html>
